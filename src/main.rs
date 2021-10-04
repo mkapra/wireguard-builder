@@ -1,42 +1,65 @@
-use tide::prelude::*;
-use tide::Request;
+use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
+use diesel::prelude::*;
+use diesel::sqlite::SqliteConnection;
+use dotenv::dotenv;
+use std::env;
 
-#[derive(Debug, Deserialize)]
-struct Server {
-    id: u32,
+#[macro_use]
+extern crate diesel;
 
-    description: Option<String>,
-    forward_interface: Option<String>,
-    interface_id: u32,
-    listen_address: String,
-    listen_port: u32,
-    name: String,
-    private_key: String,
-    public_key: String,
-    vpn_net: String,
+mod models;
+use models::Key;
+
+mod schema;
+use schema::keys::dsl::*;
+
+struct AppState {
+    db_connection: SqliteConnection,
 }
 
-#[derive(Debug, Deserialize, PartialEq)]
-struct Client {
-    id: u32,
-    priv_key: String,
-    pub_key: String,
-    name: String,
-    description: Option<String>,
-    allowed_ips: Vec<String>,
-    ip: String,
-    dns_server: Option<String>,
-    keepalive: u32,
+pub fn establish_connection() -> SqliteConnection {
+    dotenv().ok();
+
+    let database_url = env::var("DATABASE_URL")
+        .expect("DATABASE_URL must be set");
+
+    SqliteConnection::establish(&database_url)
+        .expect(&format!("Error connecting to {}", database_url))
 }
 
-#[async_std::main]
-async fn main() -> tide::Result<()> {
-    let mut app = tide::new();
-    app.at("/server").post(order_shoes);
-    app.listen("127.0.0.1:8080").await?;
-    Ok(())
+#[post("/keys")]
+async fn post_key(data: web::Data<AppState>) -> impl Responder {
+    let key = Key::gen_key();
+    let json_key = serde_json::to_string(&key).expect("Could not convert");
+
+    diesel::insert_into(keys)
+        .values(&key)
+        .execute(&data.db_connection)
+        .expect("Error saving new post");
+
+    HttpResponse::Ok().body(json_key)
 }
 
-async fn order_shoes(req: Request<()>) -> tide::Result {
-    Ok("BLA".into())
+#[get("/keys")]
+async fn get_key(data: web::Data<AppState>) -> impl Responder {
+    let result = keys.load::<Key>(&data.db_connection).expect("Could not get keys");
+    let json_keys = serde_json::to_string(&result).expect("Could not convert");
+
+    HttpResponse::Ok().body(json_keys)
+}
+
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| {
+        App::new()
+            .data(AppState {
+                db_connection: establish_connection()
+            })
+            .service(post_key)
+
+            .service(get_key)
+    })
+        .bind("127.0.0.1:8080")?
+        .run()
+        .await
 }

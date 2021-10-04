@@ -1,7 +1,0 @@
-struct DbConnection {
-    
-}
-
-impl DbConnection {
-    
-}
