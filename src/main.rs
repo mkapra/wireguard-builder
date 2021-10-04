@@ -20,8 +20,7 @@ struct AppState {
 pub fn establish_connection() -> SqliteConnection {
     dotenv().ok();
 
-    let database_url = env::var("DATABASE_URL")
-        .expect("DATABASE_URL must be set");
+    let database_url = env::var("DATABASE_URL").expect("DATABASE_URL must be set");
 
     SqliteConnection::establish(&database_url)
         .expect(&format!("Error connecting to {}", database_url))
@@ -42,7 +41,9 @@ async fn post_key(data: web::Data<AppState>) -> impl Responder {
 
 #[get("/keys")]
 async fn get_key(data: web::Data<AppState>) -> impl Responder {
-    let result = keys.load::<Key>(&data.db_connection).expect("Could not get keys");
+    let result = keys
+        .load::<Key>(&data.db_connection)
+        .expect("Could not get keys");
     let json_keys = serde_json::to_string(&result).expect("Could not convert");
 
     HttpResponse::Ok().body(json_keys)
@@ -53,13 +54,12 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
             .data(AppState {
-                db_connection: establish_connection()
+                db_connection: establish_connection(),
             })
             .service(post_key)
-
             .service(get_key)
     })
-        .bind("127.0.0.1:8080")?
-        .run()
-        .await
+    .bind("127.0.0.1:8080")?
+    .run()
+    .await
 }

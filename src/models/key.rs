@@ -1,6 +1,6 @@
-use wireguard_control;
-use serde::Serialize;
 use crate::schema::keys;
+use serde::Serialize;
+use wireguard_control;
 
 #[derive(Debug, Queryable, Serialize)]
 pub struct Key {
