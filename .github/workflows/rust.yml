@@ -16,7 +16,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install clang
-      run: sudo apt install -y clang
+      run: sudo apt install -y clang llvm
     - name: Install diesel_cli
       run: cargo install diesel_cli --no-default-features --features sqlite
     - name: Build
