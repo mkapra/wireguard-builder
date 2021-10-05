@@ -14,12 +14,19 @@ use schema::keys::dsl::*;
 #[post("/keys")]
 async fn post_key(data: web::Data<wireguard_api_rs::AppState>) -> impl Responder {
     let key = Key::gen_key();
-    let json_key = serde_json::to_string(&key).expect("Could not convert");
 
     diesel::insert_into(keys)
         .values(&key)
         .execute(&data.db_connection)
         .expect("Error saving new post");
+
+    let created_key = keys
+        .filter(priv_key.eq(key.priv_key))
+        .get_result::<Key>(&data.db_connection)
+        .unwrap();
+
+    let json_key = serde_json::to_string(&created_key)
+        .expect("Could not convert");
 
     HttpResponse::Ok().body(json_key)
 }
