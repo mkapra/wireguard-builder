@@ -1,5 +1,5 @@
 use crate::schema::dns_servers;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Queryable, Serialize)]
 pub struct DnsServer {
