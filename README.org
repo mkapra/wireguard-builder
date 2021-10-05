@@ -4,17 +4,17 @@
 * API URLs
 ** /keys
 *** GET
-- `/keys/{id}`: Returns the key with the given id.
-- `/keys`: Returns all keys.
+- =/keys/{id}=: Returns the key with the given id.
+- =/keys=: Returns all keys.
 *** POST
-- `/keys`: Creates a new key. No body is required. A key is generated directly from the API.
+- =/keys=: Creates a new key. No body is required. A key is generated directly from the API.
 
 ** /dns_servers
 *** GET
-- `/dns_servers/{id}`: Returns the dns server with the given id.
-- `/dns_servers`: Returns all dns servers.
+- =/dns_servers/{id}=: Returns the dns server with the given id.
+- =/dns_servers=: Returns all dns servers.
 *** POST
-- `/dns_servers`: Creates a new dns_server
+- =/dns_servers=: Creates a new dns_server
 Body:
 | Name | Type   | Required? |
 | ip   | String | [x]       |
