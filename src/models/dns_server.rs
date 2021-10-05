@@ -1,5 +1,5 @@
 use crate::schema::dns_servers;
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Queryable, Serialize)]
 pub struct DnsServer {
@@ -7,7 +7,7 @@ pub struct DnsServer {
     pub ip: String,
 }
 
-#[derive(Insertable, Serialize)]
+#[derive(Debug, Insertable, Serialize, Deserialize)]
 #[table_name = "dns_servers"]
 pub struct NewDnsServer {
     pub ip: String,

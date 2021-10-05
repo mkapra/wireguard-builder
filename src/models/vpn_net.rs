@@ -10,7 +10,6 @@ pub struct VpnNet {
     port: i32,
 }
 
-
 #[derive(Insertable, Serialize)]
 #[table_name = "vpn_nets"]
 pub struct NewVpnNet {
