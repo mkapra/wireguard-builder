@@ -11,3 +11,4 @@ pub use dns_server::NewDnsServer;
 
 mod allowed_ip;
 pub use allowed_ip::AllowedIp;
+pub use allowed_ip::NewAllowedIp;

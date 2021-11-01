@@ -10,6 +10,7 @@ mod controllers;
 use controllers::key::*;
 use controllers::dns_server::*;
 use controllers::vpn_net::*;
+use controllers::allowed_ip::*;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
@@ -29,6 +30,10 @@ async fn main() -> std::io::Result<()> {
             .service(get_vpn_nets)
             .service(get_vpn_net)
             .service(post_vpn_nets)
+
+            .service(get_allowed_ips)
+            .service(get_allowed_ip)
+            .service(post_allowed_ips)
     })
     .bind("127.0.0.1:8180")?
     .run()
