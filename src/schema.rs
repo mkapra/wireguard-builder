@@ -41,12 +41,12 @@ table! {
 }
 
 table! {
-    server (id) {
+    servers (id) {
         id -> Integer,
         name -> Text,
         description -> Nullable<Text>,
         forward_interface -> Nullable<Text>,
-        net_id -> Integer,
+        vpn_net_id -> Integer,
         key_id -> Integer,
     }
 }
@@ -73,8 +73,8 @@ joinable!(client_allowed_ips -> allowed_ips (allowed_ip_id));
 joinable!(client_allowed_ips -> clients (client_id));
 joinable!(clients -> dns_servers (dns_server_id));
 joinable!(clients -> keys (key_id));
-joinable!(server -> keys (key_id));
-joinable!(server -> vpn_nets (net_id));
+joinable!(servers -> keys (key_id));
+joinable!(servers -> vpn_nets (vpn_net_id));
 joinable!(vpn_ips -> vpn_nets (net_id));
 
 allow_tables_to_appear_in_same_query!(
@@ -83,7 +83,7 @@ allow_tables_to_appear_in_same_query!(
     clients,
     dns_servers,
     keys,
-    server,
+    servers,
     vpn_ips,
     vpn_nets,
 );
