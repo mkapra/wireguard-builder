@@ -1,9 +1,9 @@
 use actix_web::{get, post, web, HttpResponse, Responder};
 use diesel::prelude::*;
 
-use crate::schema::vpn_nets::dsl::*;
-use crate::models::VpnNet;
 use crate::models::NewVpnNet;
+use crate::models::VpnNet;
+use crate::schema::vpn_nets::dsl::*;
 
 #[get("/vpn_nets")]
 async fn get_vpn_nets(data: web::Data<wireguard_api_rs::AppState>) -> impl Responder {
@@ -35,7 +35,11 @@ async fn post_vpn_nets(
     data: web::Data<wireguard_api_rs::AppState>,
 ) -> impl Responder {
     if let Ok(_) = vpn_nets
-        .filter(address.eq(&vpn_net.address).and(interface.eq(&vpn_net.interface)))
+        .filter(
+            address
+                .eq(&vpn_net.address)
+                .and(interface.eq(&vpn_net.interface)),
+        )
         .get_result::<VpnNet>(&data.db_connection)
     {
         return HttpResponse::BadRequest().body(r#"{"error": "VPN-Net exists already."}"#);
@@ -48,7 +52,11 @@ async fn post_vpn_nets(
         .expect("Error saving new post");
 
     let created_vpn_net = vpn_nets
-        .filter(address.eq(&vpn_net_converted.address).and(interface.eq(&vpn_net_converted.interface)))
+        .filter(
+            address
+                .eq(&vpn_net_converted.address)
+                .and(interface.eq(&vpn_net_converted.interface)),
+        )
         .get_result::<VpnNet>(&data.db_connection)
         .unwrap();
 

@@ -1,9 +1,9 @@
 use actix_web::{get, post, web, HttpResponse, Responder};
 use diesel::prelude::*;
 
-use crate::schema::allowed_ips::dsl::*;
 use crate::models::AllowedIp;
 use crate::models::NewAllowedIp;
+use crate::schema::allowed_ips::dsl::*;
 
 #[get("/allowed_ips")]
 async fn get_allowed_ips(data: web::Data<wireguard_api_rs::AppState>) -> impl Responder {

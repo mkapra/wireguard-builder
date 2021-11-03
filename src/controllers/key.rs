@@ -1,8 +1,8 @@
 use actix_web::{get, post, web, HttpResponse, Responder};
 use diesel::prelude::*;
 
-use crate::schema::keys::dsl::*;
 use crate::models::Key;
+use crate::schema::keys::dsl::*;
 
 #[post("/keys")]
 pub async fn post_key(data: web::Data<wireguard_api_rs::AppState>) -> impl Responder {

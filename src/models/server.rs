@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 
-use crate::schema::{servers};
 use crate::models::{Key, VpnNet};
+use crate::schema::servers;
 
 #[derive(Identifiable, Debug, Queryable, Serialize, Associations)]
 #[belongs_to(VpnNet)]
@@ -13,7 +13,7 @@ pub struct Server {
     pub description: Option<String>,
     pub forward_interface: Option<String>,
     pub vpn_net_id: i32,
-    pub key_id: i32
+    pub key_id: i32,
 }
 
 #[derive(Debug, Insertable, Serialize, Deserialize)]
@@ -23,5 +23,5 @@ pub struct NewServer {
     pub description: Option<String>,
     pub forward_interface: Option<String>,
     pub vpn_net_id: i32,
-    pub key_id: i32
+    pub key_id: i32,
 }

@@ -1,9 +1,9 @@
 use actix_web::{get, post, web, HttpResponse, Responder};
 use diesel::prelude::*;
 
-use crate::schema::servers::dsl::*;
-use crate::models::Server;
 use crate::models::NewServer;
+use crate::models::Server;
+use crate::schema::servers::dsl::*;
 
 #[get("/servers")]
 async fn get_servers(data: web::Data<wireguard_api_rs::AppState>) -> impl Responder {
