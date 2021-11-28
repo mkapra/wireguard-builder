@@ -1,7 +1,0 @@
-version: 2
-updates:
-  # Updates for rust dependencies
-  - package-ecosystem: "cargo"
-    directory: "/"
-    schedule:
-      interval: "daily"
