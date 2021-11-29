@@ -750,7 +750,7 @@ paths:
   /vpn_ip:
     get:
       tags:
-        - VPN IP-Address
+        - VPNIP Address
       operationId: GetIp
       summary: Get all vpn ip addresses
       description: Get all vpn ip addresses
@@ -774,7 +774,7 @@ paths:
           $ref: '#/components/responses/Default'
     post:
       tags:
-        - VPN IP-Address
+        - VPNIP Address
       operationId: CreateVpnIp
       summary: Add a new VPN ip address
       description: Add a new VPN ip address
@@ -802,7 +802,7 @@ paths:
   /vpn_ip/{vpnIpId}:
     get:
       tags:
-        - VPN IP-Address
+        - VPNIP Address
       operationId: GetVpnIpAddress
       summary: Find VPN ip address by id
       description: Returns a single VPN ip address
@@ -831,7 +831,7 @@ paths:
           $ref: '#/components/responses/Default'
     delete:
       tags:
-        - VPN IP-Address
+        - VPNIP Address
       operationId: DeleteIpAddress
       summary: Deletes a VPN ip address
       description: Deletes a VPN ip address
@@ -856,7 +856,7 @@ paths:
           $ref: '#/components/responses/Default'
     put:
       tags:
-        - VPN IP-Address
+        - VPNIP Address
       operationId: UpdateIpAddress
       summary: Update a VPN ip address
       description: Update a VPN ip address
