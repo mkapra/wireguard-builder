@@ -1357,8 +1357,8 @@ paths:
           description: Unexpected Error
       summary: Get all vpn ip addresses
       tags:
-      - VPN IP-Address
-      x-openapi-router-controller: openapi_server.controllers.vpn_ip_address_controller
+      - VPNIP Address
+      x-openapi-router-controller: openapi_server.controllers.vpnip_address_controller
     post:
       description: Add a new VPN ip address
       operationId: create_vpn_ip
@@ -1396,8 +1396,8 @@ paths:
           description: Unexpected Error
       summary: Add a new VPN ip address
       tags:
-      - VPN IP-Address
-      x-openapi-router-controller: openapi_server.controllers.vpn_ip_address_controller
+      - VPNIP Address
+      x-openapi-router-controller: openapi_server.controllers.vpnip_address_controller
   /vpn_ip/{vpnIpId}:
     delete:
       description: Deletes a VPN ip address
@@ -1449,8 +1449,8 @@ paths:
           description: Unexpected Error
       summary: Deletes a VPN ip address
       tags:
-      - VPN IP-Address
-      x-openapi-router-controller: openapi_server.controllers.vpn_ip_address_controller
+      - VPNIP Address
+      x-openapi-router-controller: openapi_server.controllers.vpnip_address_controller
     get:
       description: Returns a single VPN ip address
       operationId: get_vpn_ip_address
@@ -1505,8 +1505,8 @@ paths:
           description: Unexpected Error
       summary: Find VPN ip address by id
       tags:
-      - VPN IP-Address
-      x-openapi-router-controller: openapi_server.controllers.vpn_ip_address_controller
+      - VPNIP Address
+      x-openapi-router-controller: openapi_server.controllers.vpnip_address_controller
     put:
       description: Update a VPN ip address
       operationId: update_ip_address
@@ -1568,8 +1568,8 @@ paths:
           description: Unexpected Error
       summary: Update a VPN ip address
       tags:
-      - VPN IP-Address
-      x-openapi-router-controller: openapi_server.controllers.vpn_ip_address_controller
+      - VPNIP Address
+      x-openapi-router-controller: openapi_server.controllers.vpnip_address_controller
   /vpn_net:
     get:
       description: Retrieves all vpn networks
