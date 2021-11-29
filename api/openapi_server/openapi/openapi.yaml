@@ -1,0 +1,2311 @@
+openapi: 3.0.0
+info:
+  description: Provides resources that are necessary for a valid wireguard setup
+  title: API for wireguard configuration
+  version: 0.0.1
+servers:
+- url: https://localhost/api
+security:
+- BearerAuth: []
+paths:
+  /allowed_ip:
+    get:
+      description: Get all AllowedIps
+      operationId: get_allowed_ips
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AllowedIp'
+                maxItems: 100
+                type: array
+          description: OK
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Get all AllowedIps
+      tags:
+      - AllowedIP Address
+      x-openapi-router-controller: openapi_server.controllers.allowed_ip_address_controller
+    post:
+      description: Add a new AllowedIp
+      operationId: create_allowed_ip
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AllowedIp'
+        description: Create a new AllowedIp
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllowedIp'
+          description: OK
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Add a new AllowedIP
+      tags:
+      - AllowedIP Address
+      x-openapi-router-controller: openapi_server.controllers.allowed_ip_address_controller
+  /allowed_ip/{allowedIpId}:
+    delete:
+      description: Deletes a AllowedIp
+      operationId: delete_allowed_ip
+      parameters:
+      - description: allowed ip address id
+        explode: false
+        in: path
+        name: allowedIpId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Deleted
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Invalid id value
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Deletes a AllowedIp
+      tags:
+      - AllowedIP Address
+      x-openapi-router-controller: openapi_server.controllers.allowed_ip_address_controller
+    get:
+      description: Returns a single AllowedIp
+      operationId: get_allowed_ip
+      parameters:
+      - description: allowed ip address id
+        explode: false
+        in: path
+        name: allowedIpId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllowedIp'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Invalid ID supplied
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Find AlllowedIp by id
+      tags:
+      - AllowedIP Address
+      x-openapi-router-controller: openapi_server.controllers.allowed_ip_address_controller
+    put:
+      description: Update a AllowedIP
+      operationId: update_allowed_ip
+      parameters:
+      - description: allowed ip address id
+        explode: false
+        in: path
+        name: allowedIpId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AllowedIp'
+        description: Update a AllowedIp
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllowedIp'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Invalid id value
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Update a AllowedIP
+      tags:
+      - AllowedIP Address
+      x-openapi-router-controller: openapi_server.controllers.allowed_ip_address_controller
+  /client:
+    get:
+      description: Get all vpn clients
+      operationId: get_clients
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Client'
+                maxItems: 1000
+                type: array
+          description: OK
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Get all vpn clients
+      tags:
+      - VPN Client
+      x-openapi-router-controller: openapi_server.controllers.vpn_client_controller
+    post:
+      description: Add a new VPN client
+      operationId: create_client
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+        description: Create a new VPN client
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+          description: OK
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Add a new VPN client
+      tags:
+      - VPN Client
+      x-openapi-router-controller: openapi_server.controllers.vpn_client_controller
+  /client/getConfig:
+    get:
+      description: Returns a configuration for a VPN client
+      operationId: get_config_for_client
+      parameters:
+      - description: client id for the configuration request
+        explode: true
+        in: query
+        name: clientIdConfig
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WireguardConfig'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WireguardConfig'
+          description: Invalid ID supplied
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Returns a configuration for a VPN client
+      tags:
+      - Wireguard Configuration
+      x-openapi-router-controller: openapi_server.controllers.wireguard_configuration_controller
+  /client/{clientId}:
+    delete:
+      description: Deletes a VPN client
+      operationId: delete_client
+      parameters:
+      - description: VPN client id
+        explode: false
+        in: path
+        name: clientId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Deleted
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Invalid id value
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Deletes a VPN client
+      tags:
+      - VPN Client
+      x-openapi-router-controller: openapi_server.controllers.vpn_client_controller
+    get:
+      description: Returns a single VPN client
+      operationId: get_vpn_client
+      parameters:
+      - description: VPN client id
+        explode: false
+        in: path
+        name: clientId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Invalid ID supplied
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Find VPN client by id
+      tags:
+      - VPN Client
+      x-openapi-router-controller: openapi_server.controllers.vpn_client_controller
+    put:
+      description: Update a VPN client
+      operationId: update_client
+      parameters:
+      - description: VPN client id
+        explode: false
+        in: path
+        name: clientId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+        description: Update a VPN client
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VpnNet'
+          description: Invalid id value
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Update a VPN client
+      tags:
+      - VPN Client
+      x-openapi-router-controller: openapi_server.controllers.vpn_client_controller
+  /dns_server:
+    get:
+      description: Get all dns servers
+      operationId: get_dns_servers
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DnsServer'
+                maxItems: 1000
+                type: array
+          description: OK
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Get all dns servers
+      tags:
+      - DNS Server
+      x-openapi-router-controller: openapi_server.controllers.dns_server_controller
+    post:
+      description: Add a new DNS server
+      operationId: create_dns_server
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DnsServer'
+        description: Create a new DNS server
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DnsServer'
+          description: OK
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Add a new DNS server
+      tags:
+      - DNS Server
+      x-openapi-router-controller: openapi_server.controllers.dns_server_controller
+  /dns_server/{serverId}:
+    delete:
+      description: Deletes a DNS server
+      operationId: delete_dns_server
+      parameters:
+      - description: DNS server id
+        explode: false
+        in: path
+        name: serverId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Deleted
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Invalid id value
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Deletes a DNS server
+      tags:
+      - DNS Server
+      x-openapi-router-controller: openapi_server.controllers.dns_server_controller
+    get:
+      description: Returns a single DNS server
+      operationId: get_dns_server
+      parameters:
+      - description: DNS server id
+        explode: false
+        in: path
+        name: serverId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DnsServer'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Invalid ID supplied
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Find DNS server by id
+      tags:
+      - DNS Server
+      x-openapi-router-controller: openapi_server.controllers.dns_server_controller
+    put:
+      description: Update a DNS server
+      operationId: update_dns_server
+      parameters:
+      - description: DNS server id
+        explode: false
+        in: path
+        name: serverId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DnsServer'
+        description: Update a DNS server
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DnsServer'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Invalid id value
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Update a DNS server
+      tags:
+      - DNS Server
+      x-openapi-router-controller: openapi_server.controllers.dns_server_controller
+  /keypair:
+    get:
+      description: Retrieves all keypairs.
+      operationId: get_keypairs
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Keypair'
+                maxItems: 5000
+                type: array
+          description: OK
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Get all keypairs
+      tags:
+      - Keypair
+      x-openapi-router-controller: openapi_server.controllers.keypair_controller
+    post:
+      description: Generates a new keypair.
+      operationId: create_keypair
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Keypair'
+          description: OK
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Generate a new keypair
+      tags:
+      - Keypair
+      x-openapi-router-controller: openapi_server.controllers.keypair_controller
+  /keypair/{keypairId}:
+    delete:
+      description: Deletes a keypair
+      operationId: delete_keypair
+      parameters:
+      - description: Keypair id
+        explode: false
+        in: path
+        name: keypairId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Deleted
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Invalid id value
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Deletes a keypair
+      tags:
+      - Keypair
+      x-openapi-router-controller: openapi_server.controllers.keypair_controller
+    get:
+      description: Get keypair by id
+      operationId: get_keypair
+      parameters:
+      - description: Keypair id
+        explode: false
+        in: path
+        name: keypairId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Keypair'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Invalid ID supplied
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Get keypair by id
+      tags:
+      - Keypair
+      x-openapi-router-controller: openapi_server.controllers.keypair_controller
+  /server:
+    get:
+      description: Get all vpn servers
+      operationId: get_server
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Server'
+                maxItems: 1000
+                type: array
+          description: OK
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: unexpected error
+      summary: Get all vpn servers
+      tags:
+      - VPN Server
+      x-openapi-router-controller: openapi_server.controllers.vpn_server_controller
+    post:
+      description: Add a new VPN server
+      operationId: create_server
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Server'
+        description: Create a new VPN server
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+          description: OK
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Add a new VPN server
+      tags:
+      - VPN Server
+      x-openapi-router-controller: openapi_server.controllers.vpn_server_controller
+  /server/getConfig:
+    get:
+      description: Returns a configuration for a VPN server
+      operationId: get_config_for_server
+      parameters:
+      - description: server id for the configuration request
+        explode: true
+        in: query
+        name: serverIdConfig
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WireguardConfig'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VpnNet'
+          description: Invalid ID supplied
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Returns a configuration for a VPN server
+      tags:
+      - Wireguard Configuration
+      x-openapi-router-controller: openapi_server.controllers.wireguard_configuration_controller
+  /server/{serverId}:
+    delete:
+      description: Deletes a VPN server
+      operationId: delete_server
+      parameters:
+      - description: VPN server id
+        explode: false
+        in: path
+        name: serverId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Deleted
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WireguardConfig'
+          description: Invalid id value
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Deletes a VPN server
+      tags:
+      - VPN Server
+      x-openapi-router-controller: openapi_server.controllers.vpn_server_controller
+    get:
+      description: Returns a single VPN server
+      operationId: get_vpn_server
+      parameters:
+      - description: VPN server id
+        explode: false
+        in: path
+        name: serverId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VpnNet'
+          description: Invalid ID supplied
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Find VPN server by id
+      tags:
+      - VPN Server
+      x-openapi-router-controller: openapi_server.controllers.vpn_server_controller
+    put:
+      description: Update a VPN server
+      operationId: update_server
+      parameters:
+      - description: VPN server id
+        explode: false
+        in: path
+        name: serverId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Server'
+        description: Update a VPN server
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Invalid id value
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Update a VPN server
+      tags:
+      - VPN Server
+      x-openapi-router-controller: openapi_server.controllers.vpn_server_controller
+  /vpn_ip:
+    get:
+      description: Get all vpn ip addresses
+      operationId: get_ip
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/VpnIp'
+                maxItems: 5000
+                type: array
+          description: OK
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Get all vpn ip addresses
+      tags:
+      - VPNIP Address
+      x-openapi-router-controller: openapi_server.controllers.vpnip_address_controller
+    post:
+      description: Add a new VPN ip address
+      operationId: create_vpn_ip
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VpnIp'
+        description: Create a new VPN ip address
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VpnIp'
+          description: OK
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Add a new VPN ip address
+      tags:
+      - VPNIP Address
+      x-openapi-router-controller: openapi_server.controllers.vpnip_address_controller
+  /vpn_ip/{vpnIpId}:
+    delete:
+      description: Deletes a VPN ip address
+      operationId: delete_ip_address
+      parameters:
+      - description: VPN ip address id
+        explode: false
+        in: path
+        name: vpnIpId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Deleted
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Invalid id value
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Deletes a VPN ip address
+      tags:
+      - VPNIP Address
+      x-openapi-router-controller: openapi_server.controllers.vpnip_address_controller
+    get:
+      description: Returns a single VPN ip address
+      operationId: get_vpn_ip_address
+      parameters:
+      - description: VPN ip address id
+        explode: false
+        in: path
+        name: vpnIpId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VpnIp'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Invalid ID supplied
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Find VPN ip address by id
+      tags:
+      - VPNIP Address
+      x-openapi-router-controller: openapi_server.controllers.vpnip_address_controller
+    put:
+      description: Update a VPN ip address
+      operationId: update_ip_address
+      parameters:
+      - description: VPN ip address id
+        explode: false
+        in: path
+        name: vpnIpId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VpnIp'
+        description: Update a VPN ip address
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VpnIp'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Invalid id value
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Update a VPN ip address
+      tags:
+      - VPNIP Address
+      x-openapi-router-controller: openapi_server.controllers.vpnip_address_controller
+  /vpn_net:
+    get:
+      description: Retrieves all vpn networks
+      operationId: get_vpn_networks
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/VpnNet'
+                maxItems: 5000
+                type: array
+          description: OK
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Get all vpn networks
+      tags:
+      - VPN Network
+      x-openapi-router-controller: openapi_server.controllers.vpn_network_controller
+    post:
+      description: Add a new VPN Network
+      operationId: create_vpn_network
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VpnNet'
+        description: Create a new VPN network
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VpnNet'
+          description: OK
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Add a new VPN Network
+      tags:
+      - VPN Network
+      x-openapi-router-controller: openapi_server.controllers.vpn_network_controller
+  /vpn_net/{vpnNetId}:
+    delete:
+      description: Deletes a vpn network
+      operationId: delete_vpn_network
+      parameters:
+      - description: VPN network id
+        explode: false
+        in: path
+        name: vpnNetId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Deleted
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VpnNet'
+          description: Invalid id value
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Deletes a vpn network
+      tags:
+      - VPN Network
+      x-openapi-router-controller: openapi_server.controllers.vpn_network_controller
+    get:
+      description: Returns a single vpn network
+      operationId: get_vpn_network
+      parameters:
+      - description: VPN network id
+        explode: false
+        in: path
+        name: vpnNetId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VpnNet'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VpnNet'
+          description: Invalid ID supplied
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Find vpn network by id
+      tags:
+      - VPN Network
+      x-openapi-router-controller: openapi_server.controllers.vpn_network_controller
+    put:
+      description: Update a vpn network
+      operationId: update_vpn_network
+      parameters:
+      - description: VPN network id
+        explode: false
+        in: path
+        name: vpnNetId
+        required: true
+        schema:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VpnNet'
+        description: Update a vpn network
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VpnNet'
+          description: OK
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VpnNet'
+          description: Invalid id value
+        "401":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unauthorized
+        "403":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Forbidden
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: The specified resource was not found
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected Error
+      summary: Update a vpn network
+      tags:
+      - VPN Network
+      x-openapi-router-controller: openapi_server.controllers.vpn_network_controller
+components:
+  parameters:
+    clientId:
+      description: VPN client id
+      explode: false
+      in: path
+      name: clientId
+      required: true
+      schema:
+        format: int64
+        maximum: 2147483647
+        minimum: 0
+        type: integer
+      style: simple
+    serverId:
+      description: VPN server id
+      explode: false
+      in: path
+      name: serverId
+      required: true
+      schema:
+        format: int64
+        maximum: 2147483647
+        minimum: 0
+        type: integer
+      style: simple
+    dnsServerId:
+      description: DNS server id
+      explode: false
+      in: path
+      name: serverId
+      required: true
+      schema:
+        format: int64
+        maximum: 2147483647
+        minimum: 0
+        type: integer
+      style: simple
+    keypairId:
+      description: Keypair id
+      explode: false
+      in: path
+      name: keypairId
+      required: true
+      schema:
+        format: int64
+        maximum: 2147483647
+        minimum: 0
+        type: integer
+      style: simple
+    vpnNetId:
+      description: VPN network id
+      explode: false
+      in: path
+      name: vpnNetId
+      required: true
+      schema:
+        format: int64
+        maximum: 2147483647
+        minimum: 0
+        type: integer
+      style: simple
+    vpnIpId:
+      description: VPN ip address id
+      explode: false
+      in: path
+      name: vpnIpId
+      required: true
+      schema:
+        format: int64
+        maximum: 2147483647
+        minimum: 0
+        type: integer
+      style: simple
+    allowedIpId:
+      description: allowed ip address id
+      explode: false
+      in: path
+      name: allowedIpId
+      required: true
+      schema:
+        format: int64
+        maximum: 2147483647
+        minimum: 0
+        type: integer
+      style: simple
+    serverConfigId:
+      description: server id for the configuration request
+      explode: true
+      in: query
+      name: serverIdConfig
+      required: true
+      schema:
+        format: int64
+        maximum: 2147483647
+        minimum: 0
+        type: integer
+      style: form
+    clientConfigId:
+      description: client id for the configuration request
+      explode: true
+      in: query
+      name: clientIdConfig
+      required: true
+      schema:
+        format: int64
+        maximum: 2147483647
+        minimum: 0
+        type: integer
+      style: form
+  responses:
+    NotFound:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: The specified resource was not found
+    Unauthorized:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unauthorized
+    Forbidden:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Forbidden
+    Default:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      description: Unexpected Error
+  schemas:
+    Keypair:
+      additionalProperties: false
+      example:
+        privKey: privKey
+        name: name
+        id: 1280358508
+        pubKey: pubKey
+      properties:
+        id:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          readOnly: true
+          title: id
+          type: integer
+        name:
+          description: A unique name for the keypair
+          maxLength: 100
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+          title: name
+          type: string
+        privKey:
+          description: The private key
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_/+]*=
+          readOnly: true
+          title: privKey
+          type: string
+        pubKey:
+          description: The public key
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_/+]*=
+          readOnly: true
+          title: pubKey
+          type: string
+      title: Keypair
+      type: object
+    VpnNet:
+      additionalProperties: false
+      example:
+        address: address
+        port: 60957
+        name: name
+        id: 1210617418
+        interface: 353
+        subnetmask: 8
+      properties:
+        id:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          readOnly: true
+          title: id
+          type: integer
+        name:
+          description: A unique name for the vpn network
+          maxLength: 100
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+          title: name
+          type: string
+        address:
+          description: The ip address of the vpn network
+          maxLength: 15
+          pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$
+          title: address
+          type: string
+        subnetmask:
+          default: 24
+          description: The subnet mask of the vpn network in CIDR format
+          format: int64
+          maximum: 32
+          minimum: 1
+          title: subnetmask
+          type: integer
+        interface:
+          description: |
+            The number of the wg network interface on the server.
+            The name of the interface will be wg\<interface\>
+          format: int64
+          maximum: 500
+          minimum: 0
+          title: interface
+          type: integer
+        port:
+          description: The port that the server should listen on
+          format: int64
+          maximum: 65535
+          minimum: 1
+          title: port
+          type: integer
+      required:
+      - address
+      - interface
+      - name
+      - port
+      title: VpnNet
+      type: object
+    DnsServer:
+      additionalProperties: false
+      example:
+        name: name
+        ipAddress: ipAddress
+        id: 314780940
+      properties:
+        id:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          readOnly: true
+          title: id
+          type: integer
+        name:
+          description: A unique name for the DNS server
+          maxLength: 100
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+          title: name
+          type: string
+        ipAddress:
+          description: The ip address of the DNS server
+          maxLength: 15
+          pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$
+          title: ipAddress
+          type: string
+      required:
+      - ipAddress
+      - name
+      title: DnsServer
+      type: object
+    Server:
+      additionalProperties: false
+      example:
+        vpnNet:
+          address: address
+          port: 60957
+          name: name
+          id: 1210617418
+          interface: 353
+          subnetmask: 8
+        name: name
+        forwardInterface: forwardInterface
+        keypair:
+          privKey: privKey
+          name: name
+          id: 1280358508
+          pubKey: pubKey
+        description: description
+        id: 171976544
+      properties:
+        id:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          readOnly: true
+          title: id
+          type: integer
+        name:
+          description: A unique name for the VPN server
+          maxLength: 100
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+          title: name
+          type: string
+        description:
+          description: A more detailed optional description for the VPN Server
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+          title: description
+          type: string
+        forwardInterface:
+          description: |
+            If this value is set, all trafic that should be routed
+            to external will get routed over the given interface
+          maxLength: 13
+          pattern: ^[a-zA-Z]*[0-9]*$
+          title: forwardInterface
+          type: string
+        vpnNet:
+          $ref: '#/components/schemas/VpnNet'
+        keypair:
+          $ref: '#/components/schemas/Keypair'
+      required:
+      - keypair
+      - name
+      - vpnNet
+      title: Server
+      type: object
+    VpnIp:
+      additionalProperties: false
+      example:
+        vpnNet:
+          address: address
+          port: 60957
+          name: name
+          id: 1210617418
+          interface: 353
+          subnetmask: 8
+        address: address
+      properties:
+        address:
+          description: A address in a VPN network
+          maxLength: 15
+          pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$
+          title: address
+          type: string
+        vpnNet:
+          $ref: '#/components/schemas/VpnNet'
+      title: VpnIp
+      type: object
+    AllowedIp:
+      additionalProperties: false
+      example:
+        ipAddress: ipAddress
+        description: description
+      properties:
+        ipAddress:
+          description: The ip address that should be allowed
+          maxLength: 15
+          pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$
+          title: ipAddress
+          type: string
+        description:
+          description: A more detailed optional description of the allowed ip address
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+          title: description
+          type: string
+      title: AllowedIp
+      type: object
+    Client:
+      additionalProperties: false
+      example:
+        keepalive: 2170
+        allowedIps:
+        - ipAddress: ipAddress
+          description: description
+        - ipAddress: ipAddress
+          description: description
+        - ipAddress: ipAddress
+          description: description
+        - ipAddress: ipAddress
+          description: description
+        - ipAddress: ipAddress
+          description: description
+        name: name
+        keypair:
+          privKey: privKey
+          name: name
+          id: 1280358508
+          pubKey: pubKey
+        vpnIp:
+          vpnNet:
+            address: address
+            port: 60957
+            name: name
+            id: 1210617418
+            interface: 353
+            subnetmask: 8
+          address: address
+        description: description
+        id: 171976544
+        dnsServer:
+          name: name
+          ipAddress: ipAddress
+          id: 314780940
+      properties:
+        id:
+          format: int64
+          maximum: 2147483647
+          minimum: 0
+          readOnly: true
+          title: id
+          type: integer
+        name:
+          description: A unique name for the client
+          maxLength: 100
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+          title: name
+          type: string
+        description:
+          description: A more detailed optional description for the VPN Client
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+          title: description
+          type: string
+        keepalive:
+          default: 30
+          description: |
+            The keepalive value controls who often a client requests
+            a handshake with the VPN server
+          format: int64
+          maximum: 3600
+          minimum: 1
+          title: keepalive
+          type: integer
+        dnsServer:
+          $ref: '#/components/schemas/DnsServer'
+        keypair:
+          $ref: '#/components/schemas/Keypair'
+        vpnIp:
+          $ref: '#/components/schemas/VpnIp'
+        allowedIps:
+          items:
+            $ref: '#/components/schemas/AllowedIp'
+          maxItems: 5000
+          title: allowedIps
+          type: array
+      required:
+      - allowedIps
+      - keypair
+      - name
+      - vpnIp
+      title: Client
+      type: object
+    WireguardConfig:
+      additionalProperties: false
+      example:
+        configruation: configruation
+      properties:
+        configruation:
+          maxLength: 5000
+          pattern: ^[a-zA-Z0-9_\-\\\/\*\s\=\.\.]*$
+          title: configruation
+          type: string
+      title: WireguardConfig
+      type: object
+    Error:
+      additionalProperties: false
+      properties:
+        status:
+          format: int64
+          maximum: 600
+          minimum: 100
+          title: status
+          type: integer
+        type:
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+          title: type
+          type: string
+        message:
+          maxLength: 500
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+          title: message
+          type: string
+      title: Error
+      type: object
+  securitySchemes:
+    BearerAuth:
+      scheme: bearer
+      type: http
+      x-bearerInfoFunc: openapi_server.controllers.security_controller_.info_from_BearerAuth

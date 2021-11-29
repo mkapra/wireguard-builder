@@ -1,0 +1,1389 @@
+openapi: 3.0.0
+servers:
+  - url: https://localhost/api
+info:
+  title: API for wireguard configuration
+  description: Provides resources that are necessary for a valid wireguard setup
+  version: 0.0.1
+
+paths:
+  /keypair:
+    post:
+      tags:
+        - Keypair
+      operationId: CreateKeypair
+      summary: Generate a new keypair
+      description: Generates a new keypair.
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Keypair'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/Default'
+    get:
+      tags:
+        - Keypair
+      operationId: GetKeypairs
+      summary: Get all keypairs
+      description: Retrieves all keypairs.
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                maxItems: 5000
+                items:
+                  $ref: '#/components/schemas/Keypair'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+  /keypair/{keypairId}:
+    get:
+      tags:
+        - Keypair
+      operationId: GetKeypair
+      summary: Get keypair by id
+      description: Get keypair by id
+      parameters:
+        - $ref: '#/components/parameters/keypairId'
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Keypair'
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+    delete:
+      tags:
+        - Keypair
+      operationId: DeleteKeypair
+      summary: Deletes a keypair
+      description: Deletes a keypair
+      parameters:
+        - $ref: '#/components/parameters/keypairId'
+      responses:
+        '204':
+          description: Deleted
+        '400':
+          description: Invalid id value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+
+  /vpn_net:
+    get:
+      tags:
+        - VPN Network
+      operationId: GetVpnNetworks
+      summary: Get all vpn networks
+      description: Retrieves all vpn networks
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                maxItems: 5000
+                items:
+                  $ref: '#/components/schemas/VpnNet'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+    post:
+      tags:
+        - VPN Network
+      operationId: CreateVpnNetwork
+      summary: Add a new VPN Network
+      description: Add a new VPN Network
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VpnNet'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/Default'
+      requestBody:
+        description: Create a new VPN network
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VpnNet'
+  /vpn_net/{vpnNetId}:
+    get:
+      tags:
+        - VPN Network
+      operationId: GetVpnNetwork
+      summary: Find vpn network by id
+      description: Returns a single vpn network
+      parameters:
+        - $ref: '#/components/parameters/vpnNetId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VpnNet"
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VpnNet"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+    delete:
+      tags:
+        - VPN Network
+      operationId: DeleteVpnNetwork
+      summary: Deletes a vpn network
+      description: Deletes a vpn network
+      parameters:
+        - $ref: '#/components/parameters/vpnNetId'
+      responses:
+        '204':
+          description: Deleted
+        '400':
+          description: Invalid id value
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VpnNet"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+    put:
+      tags:
+        - VPN Network
+      operationId: UpdateVpnNetwork
+      summary: Update a vpn network
+      description: Update a vpn network
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VpnNet'
+        '400':
+          description: Invalid id value
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VpnNet"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+      parameters:
+        - $ref: '#/components/parameters/vpnNetId'
+      requestBody:
+        description: Update a vpn network
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VpnNet'
+
+  /dns_server:
+    get:
+      tags:
+        - DNS Server
+      operationId: GetDnsServers
+      summary: Get all dns servers
+      description: Get all dns servers
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                maxItems: 1000
+                items:
+                  $ref: '#/components/schemas/DnsServer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+    post:
+      tags:
+        - DNS Server
+      operationId: CreateDnsServer
+      summary: Add a new DNS server
+      description: Add a new DNS server
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DnsServer'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/Default'
+      requestBody:
+        description: Create a new DNS server
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DnsServer'
+  /dns_server/{serverId}:
+    get:
+      tags:
+        - DNS Server
+      operationId: GetDnsServer
+      summary: Find DNS server by id
+      description: Returns a single DNS server
+      parameters:
+        - $ref: '#/components/parameters/dnsServerId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DnsServer"
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+    delete:
+      tags:
+        - DNS Server
+      operationId: DeleteDnsServer
+      summary: Deletes a DNS server
+      description: Deletes a DNS server
+      parameters:
+        - $ref: '#/components/parameters/dnsServerId'
+      responses:
+        '204':
+          description: Deleted
+        '400':
+          description: Invalid id value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+    put:
+      tags:
+        - DNS Server
+      operationId: UpdateDnsServer
+      summary: Update a DNS server
+      description: Update a DNS server
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DnsServer'
+        '400':
+          description: Invalid id value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+      parameters:
+        - $ref: '#/components/parameters/dnsServerId'
+      requestBody:
+        description: Update a DNS server
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DnsServer'
+
+  /client:
+    get:
+      tags:
+        - VPN Client
+      operationId: GetClients
+      summary: Get all vpn clients
+      description: Get all vpn clients
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                maxItems: 1000
+                items:
+                  $ref: '#/components/schemas/Client'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+    post:
+      tags:
+        - VPN Client
+      operationId: CreateClient
+      summary: Add a new VPN client
+      description: Add a new VPN client
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/Default'
+      requestBody:
+        description: Create a new VPN client
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+
+  /client/{clientId}:
+    get:
+      tags:
+        - VPN Client
+      operationId: GetVpnClient
+      summary: Find VPN client by id
+      description: Returns a single VPN client
+      parameters:
+        - $ref: '#/components/parameters/clientId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Client"
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+    delete:
+      tags:
+        - VPN Client
+      operationId: DeleteClient
+      summary: Deletes a VPN client
+      description: Deletes a VPN client
+      parameters:
+        - $ref: '#/components/parameters/clientId'
+      responses:
+        '204':
+          description: Deleted
+        '400':
+          description: Invalid id value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+    put:
+      tags:
+        - VPN Client
+      operationId: UpdateClient
+      summary: Update a VPN client
+      description: Update a VPN client
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Client'
+        '400':
+          description: Invalid id value
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VpnNet"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+      parameters:
+        - $ref: '#/components/parameters/clientId'
+      requestBody:
+        description: Update a VPN client
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+
+  /server:
+    get:
+      tags:
+        - VPN Server
+      operationId: GetServer
+      summary: Get all vpn servers
+      description: Get all vpn servers
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                maxItems: 1000
+                items:
+                  $ref: '#/components/schemas/Server'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - VPN Server
+      operationId: CreateServer
+      summary: Add a new VPN server
+      description: Add a new VPN server
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/Default'
+      requestBody:
+        description: Create a new VPN server
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Server'
+
+  /server/getConfig:
+    get:
+      tags:
+        - Wireguard Configuration
+      operationId: GetConfigForServer
+      summary: Returns a configuration for a VPN server
+      description: Returns a configuration for a VPN server
+      parameters:
+        - $ref: '#/components/parameters/serverConfigId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WireguardConfig"
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VpnNet"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+
+  /client/getConfig:
+    get:
+      tags:
+        - Wireguard Configuration
+      operationId: GetConfigForClient
+      summary: Returns a configuration for a VPN client
+      description: Returns a configuration for a VPN client
+      parameters:
+        - $ref: '#/components/parameters/clientConfigId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WireguardConfig"
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WireguardConfig"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+
+  /server/{serverId}:
+    get:
+      tags:
+        - VPN Server
+      operationId: GetVpnServer
+      summary: Find VPN server by id
+      description: Returns a single VPN server
+      parameters:
+        - $ref: '#/components/parameters/serverId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Server"
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VpnNet"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+    delete:
+      tags:
+        - VPN Server
+      operationId: DeleteServer
+      summary: Deletes a VPN server
+      description: Deletes a VPN server
+      parameters:
+        - $ref: '#/components/parameters/serverId'
+      responses:
+        '204':
+          description: Deleted
+        '400':
+          description: Invalid id value
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WireguardConfig"
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+    put:
+      tags:
+        - VPN Server
+      operationId: UpdateServer
+      summary: Update a VPN server
+      description: Update a VPN server
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Server'
+        '400':
+          description: Invalid id value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+      parameters:
+        - $ref: '#/components/parameters/serverId'
+      requestBody:
+        description: Update a VPN server
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Server'
+
+  /vpn_ip:
+    get:
+      tags:
+        - VPNIP Address
+      operationId: GetIp
+      summary: Get all vpn ip addresses
+      description: Get all vpn ip addresses
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                maxItems: 5000
+                items:
+                  $ref: '#/components/schemas/VpnIp'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+    post:
+      tags:
+        - VPNIP Address
+      operationId: CreateVpnIp
+      summary: Add a new VPN ip address
+      description: Add a new VPN ip address
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VpnIp'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/Default'
+      requestBody:
+        description: Create a new VPN ip address
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VpnIp'
+
+  /vpn_ip/{vpnIpId}:
+    get:
+      tags:
+        - VPNIP Address
+      operationId: GetVpnIpAddress
+      summary: Find VPN ip address by id
+      description: Returns a single VPN ip address
+      parameters:
+        - $ref: '#/components/parameters/vpnIpId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VpnIp"
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+    delete:
+      tags:
+        - VPNIP Address
+      operationId: DeleteIpAddress
+      summary: Deletes a VPN ip address
+      description: Deletes a VPN ip address
+      parameters:
+        - $ref: '#/components/parameters/vpnIpId'
+      responses:
+        '204':
+          description: Deleted
+        '400':
+          description: Invalid id value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+    put:
+      tags:
+        - VPNIP Address
+      operationId: UpdateIpAddress
+      summary: Update a VPN ip address
+      description: Update a VPN ip address
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VpnIp'
+        '400':
+          description: Invalid id value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+      parameters:
+        - $ref: '#/components/parameters/vpnIpId'
+      requestBody:
+        description: Update a VPN ip address
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VpnIp'
+
+  /allowed_ip:
+    get:
+      tags:
+        - AllowedIP Address
+      operationId: GetAllowedIps
+      summary: Get all AllowedIps
+      description: Get all AllowedIps
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: array
+                maxItems: 100
+                items:
+                  $ref: '#/components/schemas/AllowedIp'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+    post:
+      tags:
+        - AllowedIP Address
+      operationId: CreateAllowedIp
+      summary: Add a new AllowedIP
+      description: Add a new AllowedIp
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllowedIp'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        default:
+          $ref: '#/components/responses/Default'
+      requestBody:
+        description: Create a new AllowedIp
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AllowedIp'
+
+  /allowed_ip/{allowedIpId}:
+    get:
+      tags:
+        - AllowedIP Address
+      operationId: GetAllowedIp
+      summary: Find AlllowedIp by id
+      description: Returns a single AllowedIp
+      parameters:
+        - $ref: '#/components/parameters/allowedIpId'
+      responses:
+        '200':
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllowedIp"
+        '400':
+          description: Invalid ID supplied
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+    delete:
+      tags:
+        - AllowedIP Address
+      operationId: DeleteAllowedIp
+      summary: Deletes a AllowedIp
+      description: Deletes a AllowedIp
+      parameters:
+        - $ref: '#/components/parameters/allowedIpId'
+      responses:
+        '204':
+          description: Deleted
+        '400':
+          description: Invalid id value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+    put:
+      tags:
+        - AllowedIP Address
+      operationId: UpdateAllowedIp
+      summary: Update a AllowedIP
+      description: Update a AllowedIP
+      responses:
+        '200':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllowedIp'
+        '400':
+          description: Invalid id value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        default:
+          $ref: '#/components/responses/Default'
+      parameters:
+        - $ref: '#/components/parameters/allowedIpId'
+      requestBody:
+        description: Update a AllowedIp
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AllowedIp'
+
+security:
+  - BearerAuth: []
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  parameters:
+    clientId:
+      name: clientId
+      in: path
+      description: VPN client id
+      required: true
+      schema:
+        type: integer
+        format: int64
+        minimum: 0
+        maximum: 2147483647
+    serverId:
+      name: serverId
+      in: path
+      description: VPN server id
+      required: true
+      schema:
+        type: integer
+        format: int64
+        minimum: 0
+        maximum: 2147483647
+    dnsServerId:
+      name: serverId
+      in: path
+      description: DNS server id
+      required: true
+      schema:
+        type: integer
+        format: int64
+        minimum: 0
+        maximum: 2147483647
+    keypairId:
+      name: keypairId
+      in: path
+      description: Keypair id
+      required: true
+      schema:
+        type: integer
+        format: int64
+        minimum: 0
+        maximum: 2147483647
+    vpnNetId:
+      name: vpnNetId
+      in: path
+      description: VPN network id
+      required: true
+      schema:
+        type: integer
+        format: int64
+        minimum: 0
+        maximum: 2147483647
+    vpnIpId:
+      name: vpnIpId
+      in: path
+      description: VPN ip address id
+      required: true
+      schema:
+        type: integer
+        format: int64
+        minimum: 0
+        maximum: 2147483647
+    allowedIpId:
+      name: allowedIpId
+      in: path
+      description: allowed ip address id
+      required: true
+      schema:
+        type: integer
+        format: int64
+        minimum: 0
+        maximum: 2147483647
+    serverConfigId:
+      name: serverIdConfig
+      in: query
+      description: server id for the configuration request
+      required: true
+      schema:
+        type: integer
+        format: int64
+        minimum: 0
+        maximum: 2147483647
+    clientConfigId:
+      name: clientIdConfig
+      in: query
+      description: client id for the configuration request
+      required: true
+      schema:
+        type: integer
+        format: int64
+        minimum: 0
+        maximum: 2147483647
+
+  schemas:
+    Keypair:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          minimum: 0
+          maximum: 2147483647
+          format: int64
+        name:
+          type: string
+          description: A unique name for the keypair
+          maxLength: 100
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+        privKey:
+          type: string
+          description: The private key
+          readOnly: true
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_/+]*=
+        pubKey:
+          type: string
+          description: The public key
+          readOnly: true
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_/+]*=
+    VpnNet:
+      type: object
+      additionalProperties: false
+      required:
+        - name
+        - address
+        - interface
+        - port
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          minimum: 0
+          maximum: 2147483647
+          format: int64
+        name:
+          type: string
+          description: A unique name for the vpn network
+          maxLength: 100
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+        address:
+          type: string
+          description: The ip address of the vpn network
+          maxLength: 15
+          pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$
+        subnetmask:
+          type: integer
+          description: The subnet mask of the vpn network in CIDR format
+          default: 24
+          minimum: 1
+          maximum: 32
+          format: int64
+        interface:
+          type: integer
+          description: |
+            The number of the wg network interface on the server.
+            The name of the interface will be wg\<interface\>
+          minimum: 0
+          maximum: 500
+          format: int64
+        port:
+          type: integer
+          description: The port that the server should listen on
+          minimum: 1
+          maximum: 65535
+          format: int64
+    DnsServer:
+      type: object
+      additionalProperties: false
+      required:
+        - name
+        - ipAddress
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          minimum: 0
+          maximum: 2147483647
+          format: int64
+        name:
+          type: string
+          description: A unique name for the DNS server
+          maxLength: 100
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+        ipAddress:
+          type: string
+          description: The ip address of the DNS server
+          maxLength: 15
+          pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$
+    Server:
+      type: object
+      additionalProperties: false
+      required:
+        - name
+        - vpnNet
+        - keypair
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          minimum: 0
+          maximum: 2147483647
+          format: int64
+        name:
+          type: string
+          description: A unique name for the VPN server
+          maxLength: 100
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+        description:
+          type: string
+          description: A more detailed optional description for the VPN Server
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+        forwardInterface:
+          type: string
+          description: |
+            If this value is set, all trafic that should be routed
+            to external will get routed over the given interface
+          maxLength: 13
+          pattern: ^[a-zA-Z]*[0-9]*$
+        vpnNet:
+          $ref: '#/components/schemas/VpnNet'
+        keypair:
+          $ref: '#/components/schemas/Keypair'
+    VpnIp:
+      type: object
+      additionalProperties: false
+      properties:
+        address:
+          type: string
+          description: A address in a VPN network
+          maxLength: 15
+          pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$
+        vpnNet:
+          $ref: '#/components/schemas/VpnNet'
+    AllowedIp:
+      type: object
+      additionalProperties: false
+      properties:
+        ip_address:
+          type: string
+          description: A ip address in a VPN network
+          maxLength: 15
+          pattern: ^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$
+        description:
+          type: string
+          description: A more detailed optional description of the allowed ip address
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+    Client:
+      type: object
+      additionalProperties: false
+      required:
+        - name
+        - keypair
+        - vpnIp
+        - allowedIps
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          minimum: 0
+          maximum: 2147483647
+          format: int64
+        name:
+          type: string
+          description: A unique name for the client
+          maxLength: 100
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+        description:
+          type: string
+          description: A more detailed optional description for the VPN Client
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+        keepalive:
+          type: integer
+          description: |
+            The keepalive value controls who often a client requests
+            a handshake with the VPN server
+          default: 30
+          minimum: 1
+          maximum: 3600
+          format: int64
+        dnsServer:
+          $ref: '#/components/schemas/DnsServer'
+        keypair:
+          $ref: '#/components/schemas/Keypair'
+        vpnIp:
+          $ref: '#/components/schemas/VpnIp'
+        allowedIps:
+          type: array
+          maxItems: 5000
+          items:
+            $ref: '#/components/schemas/AllowedIp'
+    WireguardConfig:
+      type: object
+      additionalProperties: false
+      properties:
+        configruation:
+          type: string
+          maxLength: 5000
+          pattern: ^[a-zA-Z0-9_\-\\\/\*\s\=\.\.]*$
+    Error:
+      type: object
+      additionalProperties: false
+      properties:
+        status:
+          type: integer
+          minimum: 100
+          maximum: 600
+          format: int64
+        type:
+          type: string
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+        message:
+          type: string
+          maxLength: 500
+          pattern: ^[a-zA-Z0-9_\-\s]*$
+  responses:
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Default:
+      description: Unexpected Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
