@@ -3,3 +3,6 @@
 
 # Node.js
 node_modules
+
+# Project related
+server/config.js
