@@ -1,2 +1,8 @@
-wireguard_builder.db
+# MacOS
 .DS_Store
+
+# Node.js
+node_modules
+
+# Project related
+server/config.js
