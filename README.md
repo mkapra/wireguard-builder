@@ -1,10 +1,8 @@
-# Wireguard API
-This project has the aim to provide an interface for coniguring a wireguard vpn network.
-With the corresponding [Client](https://github.com/mkapra/wireguard-client) it will be possible
-to use this interface.
+# Wireguard Builder
+This project has aims to provide a web interface for coniguring a wireguard vpn network.
 
 ## Development
-### Preparation
+### Preparation Server
 You will need a PostgreSQL database with the tables of [setup_db.sql](./server/setup_db.sql).
 
 ### config.js
