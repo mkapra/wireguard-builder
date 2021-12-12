@@ -1,4 +1,5 @@
 const { UserInputError } = require('apollo-server');
+const validator = require('../../validator');
 
 module.exports = {
     // Resolver for the keypair.
@@ -23,8 +24,8 @@ module.exports = {
     Mutation: {
         createDnsServer: async(_, { name, ip, description }, { dataSources: { db } }) => {
             // Check for valid ip address
-            if (!ip.match(/^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$/)) {
-                throw new UserInputError('Invalid IP address');
+            if (!validator.isIP(ip)) {
+                throw new UserInputError(`Invalid IP address: ${ip_address}`);
             }
 
             const newDnsServer = {

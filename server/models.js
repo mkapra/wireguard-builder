@@ -73,7 +73,7 @@ class Database extends SQLDataSource {
             .returning(['id', 'name', 'ip_address', 'description'])
             .insert(dnsServer)
             .then(res => res[0])
-            .catch(err => {
+            .catch(_ => {
                 throw new ApolloError("Error while creating the dns server. Maybe a DNS server with the given ip " +
                     "address or name already exists?", "DNS_SERVER_CREATION_ERROR");
             });
@@ -87,6 +87,45 @@ class Database extends SQLDataSource {
             .then(res => res[0])
             .catch(err => {
                 throw new ApolloError("Error while updating the dns server: " + err, "DNS_SERVER_UPDATE_ERROR");
+            });
+    }
+
+    /** VPN Networks */
+    async getVpnNetworks() {
+        return this.knex
+            .from('vpn_networks')
+            .select('*')
+            .cache(DB_CACHE_DURATION);
+    }
+
+    async getVpnNetwork(id) {
+        return this.knex
+            .first()
+            .from('vpn_networks')
+            .select('*')
+            .where('id', id)
+            .cache(DB_CACHE_DURATION);
+    }
+
+    async createVpnNetwork(vpnNetwork) {
+        return this.knex('vpn_networks')
+            .returning(['id', 'name', 'description', 'ip_address', 'subnetmask', 'port', 'interface'])
+            .insert(vpnNetwork)
+            .then(res => res[0])
+            .catch(_ => {
+                throw new ApolloError("Error while creating the vpn network. Maybe a VPN network with the given ip " +
+                    "address or name already exists?", "VPN_NETWORK_CREATION_ERROR");
+            });
+    }
+
+    async updateVpnNetwork(id, vpnNetwork) {
+        return this.knex('vpn_networks')
+            .returning(['id', 'name', 'description', 'ip_address', 'subnetmask', 'port', 'interface'])
+            .where('id', id)
+            .update(vpnNetwork)
+            .then(res => res[0])
+            .catch(err => {
+                throw new ApolloError("Error while updating the vpn network: " + err, "VPN_NETWORK_UPDATE_ERROR");
             });
     }
 }

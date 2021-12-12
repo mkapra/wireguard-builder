@@ -11,18 +11,20 @@ CREATE TABLE IF NOT EXISTS dns_servers (
   description VARCHAR
 );
 
+CREATE TABLE IF NOT EXISTS vpn_networks (
+  id SERIAL NOT NULL PRIMARY KEY,
+  name VARCHAR NOT NULL UNIQUE,
+  description VARCHAR,
+  ip_address VARCHAR NOT NULL,
+  subnetmask INTEGER NOT NULL,
+  port INTEGER NOT NULL UNIQUE,
+  interface VARCHAR NOT NULL UNIQUE
+);
+
 -- CREATE TABLE IF NOT EXISTS allowed_ips (
 --   id INTEGER NOT NULL PRIMARY KEY,
 --   ip VARCHAR NOT NULL,
 --   description VARCHAR
--- );
-
--- CREATE TABLE IF NOT EXISTS vpn_nets (
---   id INTEGER NOT NULL PRIMARY KEY,
---   address VARCHAR NOT NULL,
---   subnetmask INTEGER NOT NULL,
---   interface VARCHAR NOT NULL UNIQUE,
---   port INTEGER NOT NULL UNIQUE
 -- );
 
 -- CREATE TABLE IF NOT EXISTS vpn_ips (
