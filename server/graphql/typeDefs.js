@@ -24,6 +24,29 @@ module.exports = gql `
     ): [VpnNetwork!]
     "Returns the vpn network with the given id"
     vpnNetwork("The id of the vpn network that should be returned" id: ID!): VpnNetwork
+
+    "Returns all the vpn servers"
+    servers(
+        "A regex that should be matched against the name of the vpn servers"
+        name: String
+    ): [Server!]
+    "Returns the vpn server with the given id"
+    server("The id of the vpn server that should be returned" id: ID!): Server
+  }
+
+  input newServerInput {
+    "The name of the server"
+    name: String!
+    "The description of the server"
+    description: String
+    "The forward interface of the server"
+    forward_interface: String!
+    "The ip address of the server"
+    ip_address: String!
+    "The keypair of the server"
+    keypair: ID!
+    "The vpn network of the server"
+    vpn_network: ID!
   }
 
   type Mutation {
@@ -41,6 +64,9 @@ module.exports = gql `
     createVpnNetwork(name: String!, description: String, ip_address: String!, subnetmask: Int, port: Int!, interface: String!): VpnNetwork!
     "Updates a vpn network by the given id"
     updateVpnNetwork(id: ID!, name: String, description: String, ip_address: String, subnetmask: Int, port: Int, interface: String): VpnNetwork!
+
+    "Creates a new vpn server"
+    createServer(newServer: newServerInput!): Server!
   }
 
   "A wireguard keypair containing a private and a public key"
@@ -81,5 +107,21 @@ module.exports = gql `
     port: Int!
     "The interface of the VPN network"
     interface: String!
+  }
+
+  "A wireguard server"
+  type Server {
+    "The id of the server"
+    id: ID!
+    "The name of the server"
+    name: String!
+    "The description of the server"
+    description: String
+    "The IP address of the server"
+    ip_address: String!
+    "The interface where the other traffic should be forwarded to"
+    forward_interface: String!
+    "The keypair of the server"
+    keypair: Keypair!
   }
 `;

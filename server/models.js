@@ -98,7 +98,7 @@ class Database extends SQLDataSource {
             .cache(DB_CACHE_DURATION);
     }
 
-    async getVpnNetwork(id) {
+    async getVpnNetworkById(id) {
         return this.knex
             .first()
             .from('vpn_networks')
@@ -126,6 +126,54 @@ class Database extends SQLDataSource {
             .then(res => res[0])
             .catch(err => {
                 throw new ApolloError("Error while updating the vpn network: " + err, "VPN_NETWORK_UPDATE_ERROR");
+            });
+    }
+
+    /** Servers */
+    async getServerByKeypair(keypairId) {
+        return this.knex
+            .first()
+            .from('servers')
+            .select('*')
+            .where('key_id', keypairId)
+            .cache(DB_CACHE_DURATION);
+    }
+
+    async getServers() {
+        return this.knex
+            .from('servers')
+            .select('*')
+            .cache(DB_CACHE_DURATION);
+    }
+
+    async getServerById(id) {
+        return this.knex
+            .first()
+            .from('servers')
+            .select('*')
+            .where('id', id)
+            .cache(DB_CACHE_DURATION);
+    }
+
+    async createServer(server) {
+        return this.knex('servers')
+            .returning(['id', 'name', 'description', 'forward_interface', 'net_id', 'key_id', 'ip_address'])
+            .insert(server)
+            .then(res => res[0])
+            .catch(err => {
+                throw new ApolloError(`Error while creating the server. Maybe a server with the given ip " +
+                    "address or name already exists? ${err}`, "SERVER_CREATION_ERROR");
+            });
+    }
+
+    async updateServer(id, server) {
+        return this.knex('servers')
+            .returning(['id', 'name', 'description', 'forward_interface', 'net_id', 'key_id', 'ip_address'])
+            .where('id', id)
+            .update(server)
+            .then(res => res[0])
+            .catch(err => {
+                throw new ApolloError(`Error while updating the server: ${err}`, "SERVER_UPDATE_ERROR");
             });
     }
 }

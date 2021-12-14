@@ -21,6 +21,21 @@ CREATE TABLE IF NOT EXISTS vpn_networks (
   interface VARCHAR NOT NULL UNIQUE
 );
 
+CREATE TABLE IF NOT EXISTS servers (
+  id SERIAL NOT NULL PRIMARY KEY,
+  name VARCHAR NOT NULL,
+  description VARCHAR,
+  forward_interface VARCHAR,
+  net_id SERIAL NOT NULL,
+  key_id INTEGER NOT NULL,
+  ip_address VARCHAR NOT NULL,
+
+  CONSTRAINT servers_net_id_fkey FOREIGN KEY (net_id)
+      REFERENCES vpn_networks (id) ON DELETE CASCADE,
+  CONSTRAINT servers_key_id_fkey FOREIGN KEY (key_id)
+      REFERENCES keypairs (id) ON DELETE CASCADE
+);
+
 -- CREATE TABLE IF NOT EXISTS allowed_ips (
 --   id INTEGER NOT NULL PRIMARY KEY,
 --   ip VARCHAR NOT NULL,
@@ -49,19 +64,6 @@ CREATE TABLE IF NOT EXISTS vpn_networks (
 --   FOREIGN KEY(key_id) REFERENCES keys(id),
 --   FOREIGN KEY(ip_id) REFERENCES vpn_ips(id)
 -- );
-
--- CREATE TABLE IF NOT EXISTS server (
---   id INTEGER NOT NULL PRIMARY KEY,
---   name VARCHAR NOT NULL,
---   description VARCHAR,
---   forward_interface VARCHAR,
---   net_id INTEGER NOT NULL,
---   key_id INTEGER NOT NULL,
-
---   FOREIGN KEY(net_id) REFERENCES vpn_nets(id),
---   FOREIGN KEY(key_id) REFERENCES keys(id)
--- );
-
 
 -- CREATE TABLE IF NOT EXISTS client_allowed_ips (
 --   allowed_ip_id INTEGER NOT NULL,
