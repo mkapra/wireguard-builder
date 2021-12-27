@@ -215,6 +215,15 @@ class Database extends SQLDataSource {
                     "address or name already exists? ${err}`, "VPN_IP_CREATION_ERROR");
             });
     }
+
+    async getVpnIpById(id) {
+        return this.knex
+            .first()
+            .from('vpn_ips')
+            .select('*')
+            .where('id', id)
+            .cache(DB_CACHE_DURATION);
+    }
 }
 
 module.exports = Database;
