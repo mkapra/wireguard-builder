@@ -1,20 +1,14 @@
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
+
+import Navbar from "./Navbar";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Wireguard Builder</h1>
-
-      <nav style={{
-        borderBottom: "solid 1px",
-        paddingBottom: "1rem"
-        }}
-      >
-        <Link to="/">Home</Link> | { " " }
-        <Link to="/about">About</Link>
-      </nav>
-
-      <Outlet />
+    <div className="App flex overflow-hidden h-screen">
+      <Navbar />
+      <div className="p-10 flex-1 overflow-y-auto">
+        <Outlet />
+      </div>
     </div>
   );
 }
