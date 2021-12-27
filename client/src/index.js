@@ -23,6 +23,10 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<App />}>
             <Route path="/keypairs" element={<KeypairList />} />
+            <Route path="/dns_servers" element={<KeypairList />} />
+            <Route path="/vpn_networks" element={<KeypairList />} />
+            <Route path="/clients" element={<KeypairList />} />
+            <Route path="/servers" element={<KeypairList />} />
           </Route>
         </Routes>
       </BrowserRouter>
