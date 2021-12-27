@@ -1,7 +1,11 @@
 // Validates the given ip address
 module.exports.isIP = function(ip) {
-    var ipRegex = /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
-    return ipRegex.test(ip);
+    if (ip !== undefined && ip !== null && ip !== "") {
+      var ipRegex =
+        /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
+      return ipRegex.test(ip);
+    }
+    return false;
 };
 
 module.exports.isInRange = function(ip, net, cidr_subnet) {
