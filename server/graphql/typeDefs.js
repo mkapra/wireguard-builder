@@ -32,6 +32,31 @@ module.exports = gql `
     ): [Server!]
     "Returns the vpn server with the given id"
     server("The id of the vpn server that should be returned" id: ID!): Server
+
+    "Returns all the vpn clients"
+    clients(
+        "A regex that should be matched against the name of the vpn clients"
+        name: String
+    ): [Client!]
+    "Returns the vpn client with the given id"
+    client("The id of the vpn client that should be returned" id: ID!): Client
+  }
+
+  input newClientInput {
+    "The name of the client"
+    name: String!
+    "The description of the client"
+    description: String
+    "The dns server that should be used by the client"
+    dns_server: ID!
+    "The vpn network that should be used by the client"
+    vpn_network: ID!
+    "The ip address of the client"
+    ip_address: String!
+    "The keepalive interval of the client. Default: 25"
+    keepalive_interval: Int
+    "The keypair id of the client"
+    keypair: ID!
   }
 
   input newServerInput {
@@ -67,6 +92,9 @@ module.exports = gql `
 
     "Creates a new vpn server"
     createServer(newServer: newServerInput!): Server!
+
+    "Creates a new vpn client"
+    createClient(newClient: newClientInput!): Client!
   }
 
   "A wireguard keypair containing a private and a public key"
@@ -122,6 +150,26 @@ module.exports = gql `
     "The interface where the other traffic should be forwarded to"
     forward_interface: String!
     "The keypair of the server"
+    keypair: Keypair!
+  }
+
+ "A wireguard client"
+  type Client {
+    "The id of the client"
+    id: ID!
+    "The name of the client"
+    name: String!
+    "The description of the client"
+    description: String
+    "The dns server that should be used by the client"
+    dns_server: DnsServer!
+    "The vpn network that should be used by the client"
+    vpn_network: VpnNetwork!
+    "The ip address of the client"
+    ip_address: String!
+    "The keepalive interval of the client. Default: 25"
+    keepalive_interval: Int
+    "The keypair of the client"
     keypair: Keypair!
   }
 `;

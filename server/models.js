@@ -59,7 +59,7 @@ class Database extends SQLDataSource {
             .cache(DB_CACHE_DURATION);
     }
 
-    async getDnsServersById(id) {
+    async getDnsServerById(id) {
         return this.knex
             .first()
             .from('dns_servers')
@@ -174,6 +174,45 @@ class Database extends SQLDataSource {
             .then(res => res[0])
             .catch(err => {
                 throw new ApolloError(`Error while updating the server: ${err}`, "SERVER_UPDATE_ERROR");
+            });
+    }
+
+    /** Clients */
+    async getClients() {
+        return this.knex
+            .from('clients')
+            .select('*')
+            .cache(DB_CACHE_DURATION);
+    }
+
+    async getClientById(id) {
+        return this.knex
+            .first()
+            .from('clients')
+            .select('*')
+            .where('id', id)
+            .cache(DB_CACHE_DURATION);
+    }
+
+    async createClient(client) {
+        return this.knex('clients')
+            .returning(['id', 'name', 'description', 'dns_server_id', 'keepalive', 'key_id', 'ip_id'])
+            .insert(client)
+            .then(res => res[0])
+            .catch(err => {
+                throw new ApolloError(`Error while creating the client. Maybe a client with the given ip " +
+                    "address or name already exists? ${err}`, "CLIENT_CREATION_ERROR");
+            });
+    }
+
+    async createVpnIp(vpnIp) {
+        return this.knex('vpn_ips')
+            .returning(['id', 'address', 'net_id'])
+            .insert(vpnIp)
+            .then(res => res[0])
+            .catch(err => {
+                throw new ApolloError(`Error while creating the vpn ip. Maybe a vpn ip with the given ip " +
+                    "address or name already exists? ${err}`, "VPN_IP_CREATION_ERROR");
             });
     }
 }
