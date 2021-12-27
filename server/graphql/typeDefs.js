@@ -151,6 +151,8 @@ module.exports = gql `
     forward_interface: String!
     "The keypair of the server"
     keypair: Keypair!
+    "The vpn network that should be used by the server"
+    vpn_network: VpnNetwork!
   }
 
  "A wireguard client"
