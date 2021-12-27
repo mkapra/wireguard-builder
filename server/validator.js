@@ -17,3 +17,29 @@ module.exports.isInRange = function(ip, net, cidr_subnet) {
     var mask = 0xffffffff << (32 - cidr_subnet);
     return (ip_net & mask) == (net_net & mask);
 };
+
+module.exports.isValidCidrSubnet = function (cidr_subnet) {
+  if (cidr_subnet !== undefined && cidr_subnet !== null && cidr_subnet !== "") {
+    var cidr_subnet = parseInt(cidr_subnet);
+    if (cidr_subnet < 0 || cidr_subnet > 32) {
+      return (null, false);
+    }
+
+    return (cidr_subnet, true);
+  }
+
+  return (null, false);
+};
+
+module.exports.isValidPort = function (port) {
+  if (port !== undefined && port !== null && port !== "") {
+    var port = parseInt(port);
+    if (port < 0 || port > 65535) {
+      return (null, false);
+    }
+
+    return (port, true);
+  }
+
+  return (null, false);
+}
