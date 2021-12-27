@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+  # PostgreSQL database
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile_DB
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=db
+    volumes:
+      - db-data/:/var/lib/postgresql/data/
+  # Web server
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile_Web
+    environment:
+      - NODE_ENV=production
+      - WEB_PORT=80
+      - DB_HOST=db
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_NAME=db
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/app
+    links:
+      - db
+volumes:
+  db-data:

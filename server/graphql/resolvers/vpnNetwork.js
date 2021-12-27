@@ -5,7 +5,7 @@ module.exports = {
     // Resolver for the VPN network.
     Query: {
         vpnNetwork: async(_, { id }, { dataSources: { db } }) => {
-            return db.getVpnNetwork(id);
+            return db.getVpnNetworkById(id);
         },
         vpnNetworks: async(_, { name }, { dataSources: { db } }) => {
             let vpnNetworks = await db.getVpnNetworks();
