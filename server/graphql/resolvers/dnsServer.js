@@ -25,7 +25,7 @@ module.exports = {
         createDnsServer: async(_, { name, ip, description }, { dataSources: { db } }) => {
             // Check for valid ip address
             if (!validator.isIP(ip)) {
-                throw new UserInputError(`Invalid IP address: ${ip_address}`);
+                throw new UserInputError(`Invalid IP address: ${ip}`);
             }
 
             const newDnsServer = {
