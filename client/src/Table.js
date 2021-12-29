@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Table = ({ headings, data, onDelete, onEdit }) => {
   const hasAction = onDelete || onEdit;
 
@@ -20,15 +22,29 @@ const Table = ({ headings, data, onDelete, onEdit }) => {
             {/* iterate over object to get the values as table data */}
             {Object.entries(row).map(
               ([key, value]) =>
-                //skip value if value starts with __
-                !key.startsWith("_") && (
+                // skip value if value starts with __
+                // console.log("IS:", key, typeof value === "object", value) &&
+                !key.startsWith("_") &&
+                (typeof value === "object" && value !== null ? (
+                  <td
+                    className="border border-collapse px-2 py-1 text-center"
+                    key={value.id}
+                  >
+                    <Link
+                      className="text-blue-500 hover:text-blue-800"
+                      to={`/${key}s`} // TODO: Add ID back to url if a single preview of an object works ${value.id}
+                    >
+                      {value.id}
+                    </Link>
+                  </td>
+                ) : (
                   <td
                     className="border border-collapse px-2 py-1 text-center"
                     key={value}
                   >
                     {value}
                   </td>
-                )
+                ))
             )}
 
             {hasAction && (
@@ -71,6 +87,7 @@ const Table = ({ headings, data, onDelete, onEdit }) => {
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
+                        o
                         strokeWidth="2"
                         d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
                       />

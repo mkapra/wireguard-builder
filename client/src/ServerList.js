@@ -1,8 +1,9 @@
-import { useQuery, useMutation, gql } from "@apollo/client";
-import { toast } from "react-toastify";
+import { useState } from "react";
+import { useQuery, gql } from "@apollo/client";
 
 import Table from "./Table";
 import Error from "./Error";
+import Searchbar from "./Searchbar";
 
 const GET_SERVERS = gql`
   query Query {
@@ -14,12 +15,9 @@ const GET_SERVERS = gql`
       forward_interface
       keypair {
         id
-        public_key
       }
       vpn_network {
         id
-        name
-        ip_address
       }
     }
   }
@@ -27,6 +25,7 @@ const GET_SERVERS = gql`
 
 const ServerList = () => {
   const { loading, error, data } = useQuery(GET_SERVERS);
+  const [search, setSearch] = useState("");
 
   if (loading) return <p>Loading...</p>;
 
@@ -35,7 +34,12 @@ const ServerList = () => {
       <h2 className="text-3xl mb-4">Servers</h2>
       {error && <Error error={error} />}
       {!error && (
-        <div>
+        <div className="space-y-2">
+          <Searchbar
+            search={search}
+            setSearch={setSearch}
+            placeholder="Search for name, ip address, description or forward interface..."
+          />
           <Table
             headings={[
               "ID",
@@ -46,7 +50,21 @@ const ServerList = () => {
               "Keypair",
               "VPN Network",
             ]}
-            data={data.servers}
+            data={data.servers.filter((server) => {
+              return (
+                server.name.toLowerCase().includes(search.toLowerCase()) ||
+                (server.description &&
+                  server.description
+                    .toLowerCase()
+                    .includes(search.toLowerCase())) ||
+                server.ip_address
+                  .toLowerCase()
+                  .includes(search.toLowerCase()) ||
+                server.forward_interface
+                  .toLowerCase()
+                  .includes(search.toLowerCase())
+              );
+            })}
           />
         </div>
       )}
