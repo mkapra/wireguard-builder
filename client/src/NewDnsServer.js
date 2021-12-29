@@ -49,16 +49,26 @@ const NewDnsServer = ({ setIsOpen }) => {
     }
   };
 
+  const handleClick = (target) => {
+    if (!target.id) setIsOpen(false)
+  };
+
   useEffect(() => {
     document.addEventListener("keydown", handleEscape);
+    // document.addEventListener("click", handleClick);
+
     return () => {
       document.removeEventListener("keydown", handleEscape);
+      // document.removeEventListener("click", handleClick);
     };
   });
 
   return (
-    <div className="absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-40 flex items-center justify-center">
-      <div className="w-1/2 bg-gray-100 shadow-lg p-4 space-y-4">
+    <div
+      onClick={(e) => handleClick(e.target)}
+      className="absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-40 flex items-center justify-center"
+    >
+      <div id="modal" className="w-1/2 bg-gray-100 shadow-lg p-4 space-y-4">
         <div className="flex justify-between">
           <h2 className="text-2xl font-bold">Create new DNS Server</h2>
           <button onClick={() => setIsOpen(false)}>
@@ -128,7 +138,7 @@ const NewDnsServer = ({ setIsOpen }) => {
               type="text"
               value={ipAddress}
               onChange={(e) => setIpAddress(e.target.value)}
-              placeholder="Description"
+              placeholder="IP-Address"
             />
           </div>
 
