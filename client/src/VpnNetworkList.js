@@ -3,6 +3,7 @@ import { useQuery, gql } from "@apollo/client";
 
 import Table from "./Table";
 import Searchbar from "./Searchbar";
+import Error from "./Error";
 
 const GET_VPN_NETWORKS = gql`
   query Query {
@@ -23,7 +24,6 @@ const VpnNetworkList = () => {
   const [search, setSearch] = useState("");
 
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
 
   const matches = (vpnNetwork) => {
     return (
@@ -35,22 +35,30 @@ const VpnNetworkList = () => {
   };
 
   return (
-    <div className="space-y-2">
+    <>
       <h2 className="text-3xl mb-4">VPN Networks</h2>
-      <Searchbar search={search} setSearch={setSearch} />
-      <Table
-        headings={[
-          "ID",
-          "Name",
-          "Description",
-          "IP-Address",
-          "Subnetmask",
-          "Port",
-          "Interface",
-        ]}
-        data={data.vpnNetworks.filter((network) => matches(network, search))}
-      />
-    </div>
+      {error && <Error error={error} />}
+
+      {!error && (
+        <div className="space-y-2">
+          <Searchbar search={search} setSearch={setSearch} />
+          <Table
+            headings={[
+              "ID",
+              "Name",
+              "Description",
+              "IP-Address",
+              "Subnetmask",
+              "Port",
+              "Interface",
+            ]}
+            data={data.vpnNetworks.filter((network) =>
+              matches(network, search)
+            )}
+          />
+        </div>
+      )}
+    </>
   );
 };
 

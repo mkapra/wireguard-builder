@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Table = ({ headings, data, onDelete, onEdit }) => {
   const hasAction = onDelete || onEdit;
 
@@ -20,15 +22,29 @@ const Table = ({ headings, data, onDelete, onEdit }) => {
             {/* iterate over object to get the values as table data */}
             {Object.entries(row).map(
               ([key, value]) =>
-                //skip value if value starts with __
-                !key.startsWith("_") && (
+                // skip value if value starts with __
+                // console.log("IS:", key, typeof value === "object", value) &&
+                !key.startsWith("_") &&
+                (typeof value === "object" && value !== null ? (
+                  <td
+                    className="border border-collapse px-2 py-1 text-center"
+                    key={value.id}
+                  >
+                    <Link
+                      className="text-blue-500 hover:text-blue-800"
+                      to={`/${key}s`} // TODO: Add ID back to url if a single preview of an object works ${value.id}
+                    >
+                      {value.id}
+                    </Link>
+                  </td>
+                ) : (
                   <td
                     className="border border-collapse px-2 py-1 text-center"
                     key={value}
                   >
                     {value}
                   </td>
-                )
+                ))
             )}
 
             {hasAction && (
@@ -37,11 +53,11 @@ const Table = ({ headings, data, onDelete, onEdit }) => {
                   <button
                     title="Delete"
                     onClick={() => onDelete(row.id)}
-                    className="bg-red-500 hover:bg-red-700 text-white font-bold p-2 rounded"
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold p-1 rounded"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
+                      className="h-5 w-5"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -59,11 +75,11 @@ const Table = ({ headings, data, onDelete, onEdit }) => {
                   <button
                     title="Edit"
                     onClick={() => onEdit(row.id)}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-2 rounded"
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold p-1 rounded"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
+                      className="h-5 w-5"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -71,6 +87,7 @@ const Table = ({ headings, data, onDelete, onEdit }) => {
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
+                        o
                         strokeWidth="2"
                         d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
                       />

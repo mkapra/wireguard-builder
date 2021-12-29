@@ -3,18 +3,18 @@ services:
   # PostgreSQL database
   db:
     build:
-      context: .
+      context: ./server
       dockerfile: Dockerfile_DB
     environment:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=db
     volumes:
-      - db-data/:/var/lib/postgresql/data/
+      - db-data:/var/lib/postgresql/data/
   # Web server
   web:
     build:
-      context: .
+      context: ./server
       dockerfile: Dockerfile_Web
     environment:
       - NODE_ENV=production
@@ -24,9 +24,20 @@ services:
       - DB_PASSWORD=password
       - DB_NAME=db
     ports:
+      - "8081:80"
+    links:
+      - db
+  # React app
+  react:
+    build:
+      context: ./client
+      dockerfile: Dockerfile_React
+    environment:
+      - REACT_APP_GRAPHQL_URL=http://web:80
+    ports:
       - "8080:80"
     volumes:
-      - .:/app
+      - /app/node_modules
     links:
       - db
 volumes:
