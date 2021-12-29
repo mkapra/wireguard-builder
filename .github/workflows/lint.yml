@@ -35,6 +35,8 @@ jobs:
           eslint_dir: server/
           prettier: true
           prettier_dir: server/
+          auto_fix: true
+          continue_on_error: true
 
       - name: Run linters
         uses: wearerequired/lint-action@v1
@@ -43,3 +45,5 @@ jobs:
           eslint_dir: client/
           prettier: true
           prettier_dir: client/
+          auto_fix: true
+          continue_on_error: true
