@@ -1,4 +1,4 @@
-import { useQuery, gql } from "@apollo/client";
+import { useQuery, useMutation, gql } from "@apollo/client";
 import { useState } from "react";
 
 import Table from "./Table";
@@ -65,7 +65,6 @@ const DnsServerList = () => {
               dnsServer.ip_address.toLowerCase().includes(search.toLowerCase())
             );
           })}
-          actions={true}
         />
       </div>
 
