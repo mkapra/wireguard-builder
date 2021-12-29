@@ -21,19 +21,24 @@ module.exports = {
     dnsServer: (_, { id }, { dataSources }) => {
       return dataSources.db.getDnsServersById(id);
     },
-    Mutation: {
-      createDnsServer: async(_, { name, ip, description }, { dataSources: { db } }) => {
-        // Check for valid ip address
-        if (!validator.isIP(ip)) {
-            throw new UserInputError(`Invalid IP address: ${ip}`);
-        }
+  },
+  Mutation: {
+    createDnsServer: async (
+      _,
+      { name, ip, description },
+      { dataSources: { db } }
+    ) => {
+      // Check for valid ip address
+      if (!validator.isIP(ip)) {
+        throw new UserInputError(`Invalid IP address: ${ip}`);
+      }
 
-        const newDnsServer = {
-          name,
-          ip_address: ip,
-          description,
-        };
-        return dataSources.db.createDnsServer(newDnsServer);
+      const newDnsServer = {
+        name,
+        ip_address: ip,
+        description,
+      };
+      return dataSources.db.createDnsServer(newDnsServer);
     },
     updateDnsServer: async (
       _,

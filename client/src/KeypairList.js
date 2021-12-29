@@ -20,6 +20,12 @@ const GENERATE_KEYPAIR = gql`
   }
 `;
 
+const DELETE_KEYPAIR = gql`
+  mutation Mutation($deleteKeypairId: ID!) {
+    deleteKeypair(id: $deleteKeypairId)
+  }
+`;
+
 const KeypairList = () => {
   const {
     loading: listLoading,
@@ -37,6 +43,10 @@ const KeypairList = () => {
   ] = useMutation(GENERATE_KEYPAIR, {
     refetchQueries: [{ query: GET_KEYPAIRS }],
   });
+  const [deleteKeypair] = useMutation(DELETE_KEYPAIR, {
+    variables: { deleteKeypairId: "" },
+    refetchQueries: [{ query: GET_KEYPAIRS }],
+  });
 
   if (listLoading) return <p>Loading...</p>;
   if (listError) return <p>Error :(</p>;
@@ -44,7 +54,25 @@ const KeypairList = () => {
   if (generateError) return <p>Error :(</p>;
 
   const successGeneratedKeypair = (id) => {
-    toast.success(`Keypair with id ${id} created successfully`, { toastId: id });
+    toast.success(`Keypair with id ${id} created successfully`, {
+      toastId: id,
+    });
+  };
+
+  const handleDeleteKeypair = (id) => {
+    deleteKeypair({
+      variables: { deleteKeypairId: id },
+      onCompleted: () => {
+        toast.success(`Keypair with id ${id} deleted successfully`, {
+          toastId: id,
+        });
+      },
+      onError: (error) => {
+        toast.error(`Error deleting keypair with id ${id}: ${error}`, {
+          toastId: id,
+        });
+      },
+    });
   };
 
   return (
@@ -78,7 +106,7 @@ const KeypairList = () => {
       <Table
         headings={["ID", "Public Key"]}
         data={listData.keypairs}
-        actions={true}
+        onDelete={handleDeleteKeypair}
       />
     </div>
   );
