@@ -17,6 +17,7 @@ import KeypairList from "./KeypairList";
 import DnsServerList from "./DnsServerList";
 import VpnNetworkList from "./VpnNetworkList";
 import ServerList from "./ServerList";
+import ClientList from "./ClientList";
 
 const client = new ApolloClient({
   uri: process.env.REACT_APP_GRAPHQL_URL || "http://localhost:4000/graphql",
@@ -34,7 +35,7 @@ ReactDOM.render(
               <Route path="/keypairs" element={<KeypairList />} />
               <Route path="/dns_servers" element={<DnsServerList />} />
               <Route path="/vpn_networks" element={<VpnNetworkList />} />
-              {/* <Route path="/clients" element={<KeypairList />} /> */}
+              <Route path="/clients" element={<ClientList />} />
               <Route path="/servers" element={<ServerList />} />
             </Route>
           </Routes>
