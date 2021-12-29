@@ -2,7 +2,7 @@ const validator = require('../../validator');
 const { UserInputError } = require('apollo-server');
 
 const convertServerToObject = async (server, db) => {
-  const vpnNetwork = await db.getVpnNetworkById(ipObj.net_id);
+  const vpnNetwork = await db.getVpnNetworkById(server.net_id);
   const keypair = await db.getKeypairById(server.key_id);
 
   return {
