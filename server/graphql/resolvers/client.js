@@ -2,7 +2,7 @@ const validator = require("../../validator");
 const { UserInputError } = require("apollo-server");
 
 const convertClientToObject = async (client, db) => {
-  const ipObj = await db.getVpnIpById(client.id);
+  const ipObj = await db.getVpnIpById(client.ip_id);
   const vpnNetwork = await db.getVpnNetworkById(ipObj.net_id);
   const keypair = await db.getKeypairById(client.key_id);
   const dnsServer = await db.getDnsServerById(client.dns_server_id);
@@ -80,7 +80,7 @@ module.exports = {
       }
 
       // validate existing vpn network
-      const vpnNetwork = await db.getVpnNetworkById(vpnNetworkId);
+      const vpnNetwork = await dataSources.db.getVpnNetworkById(vpnNetworkId);
       if (!vpnNetwork) {
         throw new UserInputError(
           `VPN Network with id '${vpnNetworkId}' does not exist`
@@ -113,7 +113,7 @@ module.exports = {
         address: ipAddress,
         net_id: vpnNetworkId,
       };
-      vpnIp = await db.createVpnIp(vpnIp);
+      vpnIp = await dataSources.db.createVpnIp(vpnIp);
 
       // Create client
       const client = {
@@ -125,7 +125,10 @@ module.exports = {
         ip_id: vpnIp.id,
       };
 
-      return convertClientToObject(await db.createClient(client), dataSources.db);
+      return convertClientToObject(
+        await dataSources.db.createClient(client),
+        dataSources.db
+      );
     },
   },
 };
