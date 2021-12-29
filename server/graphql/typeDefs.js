@@ -1,6 +1,6 @@
-const { gql } = require('apollo-server');
+const { gql } = require('apollo-server')
 
-module.exports = gql `
+module.exports = gql`
   type Query {
     "Returns all the keypairs"
     keypairs: [Keypair!]
@@ -174,4 +174,4 @@ module.exports = gql `
     "The keypair of the client"
     keypair: Keypair!
   }
-`;
+`
