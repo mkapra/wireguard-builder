@@ -1,7 +1,8 @@
-import { useQuery, useMutation, gql } from "@apollo/client";
+import { useQuery, gql } from "@apollo/client";
 import { useState } from "react";
 
 import Table from "./Table";
+import Searchbar from "./Searchbar";
 import NewDnsServer from "./NewDnsServer";
 
 const GET_DNS_SERVERS = gql`
@@ -49,12 +50,10 @@ const DnsServerList = () => {
       </button>
 
       <div className="space-y-2">
-        <input
-          className="p-2 border w-full"
-          type="text"
-          placeholder="Search DNS Servers..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+        <Searchbar
+          search={search}
+          setSearch={setSearch}
+          placeholder="Search for name or ip address..."
         />
 
         <Table
