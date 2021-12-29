@@ -32,4 +32,14 @@ jobs:
         uses: wearerequired/lint-action@v1
         with:
           eslint: true
+          eslint_dir: server/
           prettier: true
+          prettier_dir: server/
+
+      - name: Run linters
+        uses: wearerequired/lint-action@v1
+        with:
+          eslint: true
+          eslint_dir: client/
+          prettier: true
+          prettier_dir: client/
