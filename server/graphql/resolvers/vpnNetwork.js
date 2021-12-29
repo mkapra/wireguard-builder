@@ -25,7 +25,7 @@ module.exports = {
   Mutation: {
     createVpnNetwork: async (
       _,
-      { name, description, ip_address: ipAddress, subnetmask, port, interface },
+      { name, description, ip_address: ipAddress, subnetmask, port, interface: serverIface },
       { dataSources }
     ) => {
       // check for valid ip address
@@ -57,7 +57,7 @@ module.exports = {
       // create vpn network object
       const vpnNetwork = {
         description,
-        interface,
+        interface: serverIface,
         name,
         port: parsedPort,
         ip_address: ipAddress,
@@ -75,7 +75,7 @@ module.exports = {
         ip_address: ipAddress,
         subnetmask,
         port,
-        interface,
+        serverIface,
       },
       { dataSources }
     ) => {
@@ -111,7 +111,7 @@ module.exports = {
       const vpnNetwork = {
         name: name,
         description,
-        interface,
+        serverIface,
         port: parsedPort,
         ip_address: ipAddress,
         subnetmask: sbnm,
