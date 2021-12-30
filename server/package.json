@@ -19,7 +19,7 @@
     },
     "homepage": "https://github.com/mkapra/wireguard-api#readme",
     "dependencies": {
-        "apollo-server": "^3.5.0",
+        "apollo-server": "^3.6.0",
         "datasource-sql": "^1.6.0",
         "graphql": "^15.7.2",
         "nodemon": "^2.0.15",
