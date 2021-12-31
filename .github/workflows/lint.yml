@@ -32,7 +32,7 @@ jobs:
       - name: Install Node.js dependencies for client
         run: cd client && npm ci
 
-      - name: Run linters
+      - name: Run linters for server
         uses: wearerequired/lint-action@v1
         with:
           eslint: true
@@ -42,7 +42,13 @@ jobs:
           auto_fix: true
           continue_on_error: true
 
-      - name: Run linters
+      - name: Pull changes from branch
+        uses: actions/checkout@v2
+        with:
+          path: .
+          ref: ${{ github.ref }}
+
+      - name: Run linters for client
         uses: wearerequired/lint-action@v1
         with:
           eslint: true
