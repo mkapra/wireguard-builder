@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server')
+const { gql } = require("apollo-server");
 
 module.exports = gql`
   type Query {
@@ -9,34 +9,37 @@ module.exports = gql`
 
     "Returns all the DNS servers"
     dnsServers(
-        "A regex that should be matched against the name of the DNS servers"
-        name: String
+      "A regex that should be matched against the name of the DNS servers"
+      name: String
     ): [DnsServer!]
     dnsServer(
-        "The id of the DNS server that should be returned"
-        id: ID!
+      "The id of the DNS server that should be returned"
+      id: ID!
     ): DnsServer
 
     "Returns all the vpn networks"
     vpnNetworks(
-        "A regex that should be matched against the name of the vpn networks"
-        name: String
+      "A regex that should be matched against the name of the vpn networks"
+      name: String
     ): [VpnNetwork!]
     "Returns the vpn network with the given id"
-    vpnNetwork("The id of the vpn network that should be returned" id: ID!): VpnNetwork
+    vpnNetwork(
+      "The id of the vpn network that should be returned"
+      id: ID!
+    ): VpnNetwork
 
     "Returns all the vpn servers"
     servers(
-        "A regex that should be matched against the name of the vpn servers"
-        name: String
+      "A regex that should be matched against the name of the vpn servers"
+      name: String
     ): [Server!]
     "Returns the vpn server with the given id"
     server("The id of the vpn server that should be returned" id: ID!): Server
 
     "Returns all the vpn clients"
     clients(
-        "A regex that should be matched against the name of the vpn clients"
-        name: String
+      "A regex that should be matched against the name of the vpn clients"
+      name: String
     ): [Client!]
     "Returns the vpn client with the given id"
     client("The id of the vpn client that should be returned" id: ID!): Client
@@ -83,12 +86,32 @@ module.exports = gql`
     "Creates a new DNS server"
     createDnsServer(name: String!, description: String, ip: String!): DnsServer!
     "Updates a DNS server by the given id"
-    updateDnsServer(id: ID!, name: String, description: String, ip: String): DnsServer!
+    updateDnsServer(
+      id: ID!
+      name: String
+      description: String
+      ip: String
+    ): DnsServer!
 
     "Creates a new vpn network"
-    createVpnNetwork(name: String!, description: String, ip_address: String!, subnetmask: Int, port: Int!, interface: String!): VpnNetwork!
+    createVpnNetwork(
+      name: String!
+      description: String
+      ip_address: String!
+      subnetmask: Int
+      port: Int!
+      interface: String!
+    ): VpnNetwork!
     "Updates a vpn network by the given id"
-    updateVpnNetwork(id: ID!, name: String, description: String, ip_address: String, subnetmask: Int, port: Int, interface: String): VpnNetwork!
+    updateVpnNetwork(
+      id: ID!
+      name: String
+      description: String
+      ip_address: String
+      subnetmask: Int
+      port: Int
+      interface: String
+    ): VpnNetwork!
 
     "Creates a new vpn server"
     createServer(newServer: newServerInput!): Server!
@@ -155,7 +178,7 @@ module.exports = gql`
     vpn_network: VpnNetwork!
   }
 
- "A wireguard client"
+  "A wireguard client"
   type Client {
     "The id of the client"
     id: ID!
@@ -174,4 +197,4 @@ module.exports = gql`
     "The keypair of the client"
     keypair: Keypair!
   }
-`
+`;
