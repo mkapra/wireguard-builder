@@ -5,5 +5,5 @@ env:
 extends:
   - standard
 parserOptions:
-  ecmaVersion: 13
+  ecmaVersion: latest
 rules: {}
