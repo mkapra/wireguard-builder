@@ -50,7 +50,7 @@ const NewDnsServer = ({ setIsOpen }) => {
   };
 
   const handleClick = (target) => {
-    if (!target.id) setIsOpen(false)
+    if (!target.id) setIsOpen(false);
   };
 
   useEffect(() => {

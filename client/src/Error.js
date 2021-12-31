@@ -5,8 +5,8 @@ const Error = ({ error }) => {
         <h3 className="text-gray-100 text-2xl text-center font-bold">Error</h3>
         <div className="space-y-4">
           <p className="text-gray-100 text-2xl text-center">
-            An error occured while processing the data. If the
-            problem persists please contact the administrator.
+            An error occured while processing the data. If the problem persists
+            please contact the administrator.
           </p>
           <div className="text-gray-200 text-sm flex space-x-2">
             <span className="font-extrabold uppercase">Error:</span>{" "}
