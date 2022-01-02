@@ -1,3 +1,6 @@
+import { React } from "react";
+import PropTypes from "prop-types";
+
 const Searchbar = ({ placeholder, search, setSearch }) => {
   return (
     <div>
@@ -15,6 +18,13 @@ const Searchbar = ({ placeholder, search, setSearch }) => {
 // Default Prop for placeholder
 Searchbar.defaultProps = {
   placeholder: "Search ...",
+};
+
+// Prop validation
+Searchbar.propTypes = {
+  placeholder: PropTypes.string,
+  search: PropTypes.string.isRequired,
+  setSearch: PropTypes.func.isRequired,
 };
 
 export default Searchbar;

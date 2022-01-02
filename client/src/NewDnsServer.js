@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { React, useEffect, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
+import PropTypes from "prop-types";
 
 import { GET_DNS_SERVERS } from "./DnsServerList";
 
@@ -50,7 +51,7 @@ const NewDnsServer = ({ setIsOpen }) => {
   };
 
   const handleClick = (target) => {
-    if (!target.id) setIsOpen(false)
+    if (!target.id) setIsOpen(false);
   };
 
   useEffect(() => {
@@ -151,6 +152,11 @@ const NewDnsServer = ({ setIsOpen }) => {
       </div>
     </div>
   );
+};
+
+// Props validation
+NewDnsServer.propTypes = {
+  setIsOpen: PropTypes.func.isRequired,
 };
 
 export default NewDnsServer;
