@@ -1,4 +1,6 @@
+import { React } from "react";
 import { Link } from "react-router-dom";
+import { PropTypes } from "prop-types";
 
 const Table = ({ headings, data, onDelete, onEdit }) => {
   const hasAction = onDelete || onEdit;
@@ -101,6 +103,14 @@ const Table = ({ headings, data, onDelete, onEdit }) => {
       </tbody>
     </table>
   );
+};
+
+// Props validation
+Table.propTypes = {
+  headings: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
+  onDelete: PropTypes.func,
+  onEdit: PropTypes.func,
 };
 
 export default Table;

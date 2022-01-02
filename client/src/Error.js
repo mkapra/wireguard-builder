@@ -1,3 +1,6 @@
+import { React } from "react";
+import PropTypes from "prop-types";
+
 const Error = ({ error }) => {
   return (
     <div className="flex w-full h-full items-center justify-center">
@@ -16,6 +19,11 @@ const Error = ({ error }) => {
       </div>
     </div>
   );
+};
+
+// Props validation
+Error.propTypes = {
+  error: PropTypes.object.isRequired,
 };
 
 export default Error;
