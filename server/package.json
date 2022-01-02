@@ -21,7 +21,7 @@
   "dependencies": {
     "apollo-server": "^3.6.1",
     "datasource-sql": "^1.6.0",
-    "graphql": "^15.7.2",
+    "graphql": "^16.2.0",
     "nodemon": "^2.0.15",
     "pg": "^8.7.1"
   },
