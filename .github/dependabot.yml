@@ -4,7 +4,11 @@ updates:
     directory: "/server"
     schedule:
       interval: "daily"
+    commit-message:
+      prefix: "⬆️""
   - package-ecosystem: "npm"
     directory: "/client"
     schedule:
       interval: "daily"
+    commit-message:
+      prefix: "⬆️""
