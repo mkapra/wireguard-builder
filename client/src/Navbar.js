@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { React } from "react";
 
 const Navbar = () => {
@@ -23,10 +23,15 @@ const Navbar = () => {
         <span className="text-2xl font-extrabold">Wireguard Builder</span>
       </a>
 
-      <nav className="flex flex-col text-blue-100 ">
-        <Link
+      <nav className="flex flex-col text-blue-100 space-y-2">
+        <NavLink
           to="/"
-          className="flex space-x-2 py-2 px-4 transition delay-75 hover:bg-orange-400 hover:text-gray-800 rounded"
+          className={({ isActive }) => {
+            return (
+              "flex space-x-2 py-2 px-4 transition delay-75 rounded-lg hover:bg-orange-400 hover:bg-opacity-80 hover:text-gray-800" +
+              (isActive ? " bg-orange-400 text-gray-800" : "")
+            );
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -43,10 +48,15 @@ const Navbar = () => {
             />
           </svg>
           <span>Home</span>
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           to="/keypairs"
-          className="flex space-x-2 py-2 px-4 transition delay-75 hover:bg-orange-400 hover:text-blue-800 rounded"
+          className={({ isActive }) => {
+            return (
+              "flex space-x-2 py-2 px-4 transition delay-75 rounded-lg hover:bg-orange-400 hover:bg-opacity-80 hover:text-gray-800" +
+              (isActive ? " bg-orange-400 text-gray-800" : "")
+            );
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -63,10 +73,15 @@ const Navbar = () => {
             />
           </svg>
           <span>Keypairs</span>
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           to="/dns_servers"
-          className="flex space-x-2 py-2 px-4 transition delay-75 hover:bg-orange-400 hover:text-blue-800 rounded"
+          className={({ isActive }) => {
+            return (
+              "flex space-x-2 py-2 px-4 transition delay-75 rounded-lg hover:bg-orange-400 hover:bg-opacity-80 hover:text-gray-800" +
+              (isActive ? " bg-orange-400 text-gray-800" : "")
+            );
+          }}
         >
           <svg
             className="w-6 h-6"
@@ -83,10 +98,15 @@ const Navbar = () => {
             ></path>
           </svg>
           <span>DNS Servers</span>
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           to="/vpn_networks"
-          className="flex space-x-2 py-2 px-4 transition delay-75 hover:bg-orange-400 hover:text-blue-800 rounded"
+          className={({ isActive }) => {
+            return (
+              "flex space-x-2 py-2 px-4 transition delay-75 rounded-lg hover:bg-orange-400 hover:bg-opacity-80 hover:text-gray-800" +
+              (isActive ? " bg-orange-400 text-gray-800" : "")
+            );
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -103,10 +123,15 @@ const Navbar = () => {
             />
           </svg>
           <span>VPN Networks</span>
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           to="/clients"
-          className="flex space-x-2 py-2 px-4 transition delay-75 hover:bg-orange-400 hover:text-blue-800 rounded"
+          className={({ isActive }) => {
+            return (
+              "flex space-x-2 py-2 px-4 transition delay-75 rounded-lg hover:bg-orange-400 hover:bg-opacity-80 hover:text-gray-800" +
+              (isActive ? " bg-orange-400 text-gray-800" : "")
+            );
+          }}
         >
           <svg
             className="w-6 h-6"
@@ -123,10 +148,15 @@ const Navbar = () => {
             ></path>
           </svg>
           <span>Clients</span>
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           to="/servers"
-          className="flex space-x-2 py-2 px-4 transition delay-75 hover:bg-orange-400 hover:text-blue-800 rounded"
+          className={({ isActive }) => {
+            return (
+              "flex space-x-2 py-2 px-4 transition delay-75 rounded-lg hover:bg-orange-400 hover:bg-opacity-80 hover:text-gray-800" +
+              (isActive ? " bg-orange-400 text-gray-800" : "")
+            );
+          }}
         >
           <svg
             className="w-6 h-6"
@@ -143,7 +173,7 @@ const Navbar = () => {
             ></path>
           </svg>
           <span>Servers</span>
-        </Link>
+        </NavLink>
       </nav>
     </div>
   );

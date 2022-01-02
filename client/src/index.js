@@ -7,7 +7,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import "./index.css";
-import Navbar from "./Navbar";
 import App from "./App";
 import KeypairList from "./KeypairList";
 import DnsServerList from "./DnsServerList";
@@ -23,20 +22,18 @@ const client = new ApolloClient({
 ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <div className="flex overflow-hidden h-screen">
-        <BrowserRouter>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<App />}>
-              <Route path="/keypairs" element={<KeypairList />} />
-              <Route path="/dns_servers" element={<DnsServerList />} />
-              <Route path="/vpn_networks" element={<VpnNetworkList />} />
-              <Route path="/clients" element={<ClientList />} />
-              <Route path="/servers" element={<ServerList />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />}>
+            <Route index element={<KeypairList />} />
+            <Route path="/keypairs" element={<KeypairList />} />
+            <Route path="/dns_servers" element={<DnsServerList />} />
+            <Route path="/vpn_networks" element={<VpnNetworkList />} />
+            <Route path="/clients" element={<ClientList />} />
+            <Route path="/servers" element={<ServerList />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </ApolloProvider>
     <ToastContainer />
   </React.StrictMode>,
