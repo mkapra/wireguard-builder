@@ -52,4 +52,4 @@ const Validator = {
   },
 };
 
-module.expoorts = Validator;
+module.exports = Validator;
