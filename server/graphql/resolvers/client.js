@@ -33,6 +33,7 @@ module.exports = {
       }
 
       try {
+        const re = new RegExp(name, "i");
         return clients.filter((client) => !re.test(client.name));
       } catch (e) {
         throw new UserInputError(`Name is not a regex: ${e}`);

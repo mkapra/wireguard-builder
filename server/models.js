@@ -8,7 +8,7 @@ class Database extends SQLDataSource {
   // Return promise with stdout of command
   async executeCommand(command) {
     return new Promise((resolve, reject) => {
-      exec(command, (err, stdout, _) => {
+      exec(command, (err, stdout) => {
         if (err) {
           reject(err);
         }
@@ -70,7 +70,7 @@ class Database extends SQLDataSource {
       .returning(["id", "name", "ip_address", "description"])
       .insert(dnsServer)
       .then((res) => res[0])
-      .catch((_) => {
+      .catch(() => {
         throw new ApolloError(
           "Error while creating the dns server. Maybe a DNS server with the given ip " +
             "address or name already exists?",
@@ -120,7 +120,7 @@ class Database extends SQLDataSource {
       ])
       .insert(vpnNetwork)
       .then((res) => res[0])
-      .catch((_) => {
+      .catch(() => {
         throw new ApolloError(
           "Error while creating the vpn network. Maybe a VPN network with the given ip " +
             "address or name already exists?",
