@@ -1,53 +1,55 @@
 // Validates the given ip address
-module.exports.isIP = function (ip) {
-  if (ip !== undefined && ip !== null && ip !== "") {
-    const ipRegex =
-      /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
-    return ipRegex.test(ip);
-  }
-  return false;
-};
+const Validator = {
+  isIP: (ip) => {
+    if (ip !== undefined && ip !== null && ip !== "") {
+      const ipRegex =
+        /^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/;
+      return ipRegex.test(ip);
+    }
+    return false;
+  },
+  isInRange: (ip, net, cidr_subnet) => {
+    const ipAddress = ip.split(".");
+    const netAddress = net.split(".");
+    const intCidrSubnet = parseInt(cidr_subnet);
+    const ipNet =
+      (parseInt(ipAddress[0]) << 24) |
+      (parseInt(ipAddress[1]) << 16) |
+      (parseInt(ipAddress[2]) << 8) |
+      parseInt(ipAddress[3]);
+    const net_net =
+      (parseInt(netAddress[0]) << 24) |
+      (parseInt(netAddress[1]) << 16) |
+      (parseInt(netAddress[2]) << 8) |
+      parseInt(netAddress[3]);
+    const mask = 0xffffffff << (32 - intCidrSubnet);
+    return (ipNet & mask) == (net_net & mask);
+  },
+  isValidCidrSubnet: (cidrSubnet) => {
+    if (cidrSubnet !== undefined && cidrSubnet !== null && cidrSubnet !== "") {
+      const intCidrSubnet = parseInt(cidrSubnet);
+      if (intCidrSubnet < 0 || intCidrSubnet > 32) {
+        return null, false;
+      }
 
-module.exports.isInRange = function (ip, net, cidr_subnet) {
-  const ip_address = ip.split(".");
-  const net_address = net.split(".");
-  var cidr_subnet = parseInt(cidr_subnet);
-  const ip_net =
-    (parseInt(ip_address[0]) << 24) |
-    (parseInt(ip_address[1]) << 16) |
-    (parseInt(ip_address[2]) << 8) |
-    parseInt(ip_address[3]);
-  const net_net =
-    (parseInt(net_address[0]) << 24) |
-    (parseInt(net_address[1]) << 16) |
-    (parseInt(net_address[2]) << 8) |
-    parseInt(net_address[3]);
-  const mask = 0xffffffff << (32 - cidr_subnet);
-  return (ip_net & mask) == (net_net & mask);
-};
-
-module.exports.isValidCidrSubnet = function (cidr_subnet) {
-  if (cidr_subnet !== undefined && cidr_subnet !== null && cidr_subnet !== "") {
-    var cidr_subnet = parseInt(cidr_subnet);
-    if (cidr_subnet < 0 || cidr_subnet > 32) {
-      return null, false;
+      return intCidrSubnet, true;
     }
 
-    return cidr_subnet, true;
-  }
+    return null, false;
+  },
 
-  return null, false;
-};
+  isValidPort: (port) => {
+    if (port !== undefined && port !== null && port !== "") {
+      const intPort = parseInt(port);
+      if (intPort < 0 || intPort > 65535) {
+        return null, false;
+      }
 
-module.exports.isValidPort = function (port) {
-  if (port !== undefined && port !== null && port !== "") {
-    var port = parseInt(port);
-    if (port < 0 || port > 65535) {
-      return null, false;
+      return port, true;
     }
 
-    return port, true;
-  }
-
-  return null, false;
+    return null, false;
+  },
 };
+
+module.expoorts = Validator;

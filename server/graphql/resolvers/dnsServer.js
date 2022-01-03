@@ -1,4 +1,4 @@
-const validator = require("../../validator");
+const validator = require("../../validator").default;
 const { UserInputError } = require("apollo-server");
 
 module.exports = {
@@ -23,11 +23,7 @@ module.exports = {
     },
   },
   Mutation: {
-    createDnsServer: async (
-      _,
-      { name, ip, description },
-      { dataSources: { db } }
-    ) => {
+    createDnsServer: async (_, { name, ip, description }, { dataSources }) => {
       // Check for valid ip address
       if (!validator.isIP(ip)) {
         throw new UserInputError(`Invalid IP address: ${ip}`);
