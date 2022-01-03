@@ -36,7 +36,6 @@ jobs:
           prettier: true
           prettier_dir: server/
           auto_fix: true
-          continue_on_error: true
 
       - name: Pull changes from branch
         uses: actions/checkout@v2
@@ -56,4 +55,3 @@ jobs:
           prettier: true
           prettier_dir: client/
           auto_fix: true
-          continue_on_error: true
