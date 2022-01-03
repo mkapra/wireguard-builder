@@ -2,8 +2,6 @@ const { ApolloError } = require("apollo-server");
 const { exec } = require("child_process");
 const { SQLDataSource } = require("datasource-sql");
 
-const { DB_CACHE_DURATION } = require("./config");
-
 class Database extends SQLDataSource {
   // Return promise with stdout of command
   async executeCommand(command) {
@@ -20,16 +18,11 @@ class Database extends SQLDataSource {
 
   /** Keypairs */
   async getKeypairs() {
-    return this.knex.from("keypairs").select("*").cache(DB_CACHE_DURATION);
+    return this.knex.from("keypairs").select("*");
   }
 
   async getKeypairById(id) {
-    return this.knex
-      .first()
-      .from("keypairs")
-      .select("*")
-      .where("id", id)
-      .cache(DB_CACHE_DURATION);
+    return this.knex.first().from("keypairs").select("*").where("id", id);
   }
 
   async createKeypair() {
@@ -53,16 +46,11 @@ class Database extends SQLDataSource {
 
   /** DNS Servers */
   async getDnsServers() {
-    return this.knex.from("dns_servers").select("*").cache(DB_CACHE_DURATION);
+    return this.knex.from("dns_servers").select("*");
   }
 
   async getDnsServerById(id) {
-    return this.knex
-      .first()
-      .from("dns_servers")
-      .select("*")
-      .where("id", id)
-      .cache(DB_CACHE_DURATION);
+    return this.knex.first().from("dns_servers").select("*").where("id", id);
   }
 
   async createDnsServer(dnsServer) {
@@ -95,16 +83,11 @@ class Database extends SQLDataSource {
 
   /** VPN Networks */
   async getVpnNetworks() {
-    return this.knex.from("vpn_networks").select("*").cache(DB_CACHE_DURATION);
+    return this.knex.from("vpn_networks").select("*");
   }
 
   async getVpnNetworkById(id) {
-    return this.knex
-      .first()
-      .from("vpn_networks")
-      .select("*")
-      .where("id", id)
-      .cache(DB_CACHE_DURATION);
+    return this.knex.first().from("vpn_networks").select("*").where("id", id);
   }
 
   async createVpnNetwork(vpnNetwork) {
@@ -157,21 +140,15 @@ class Database extends SQLDataSource {
       .first()
       .from("servers")
       .select("*")
-      .where("key_id", keypairId)
-      .cache(DB_CACHE_DURATION);
+      .where("key_id", keypairId);
   }
 
   async getServers() {
-    return this.knex.from("servers").select("*").cache(DB_CACHE_DURATION);
+    return this.knex.from("servers").select("*");
   }
 
   async getServerById(id) {
-    return this.knex
-      .first()
-      .from("servers")
-      .select("*")
-      .where("id", id)
-      .cache(DB_CACHE_DURATION);
+    return this.knex.first().from("servers").select("*").where("id", id);
   }
 
   async createServer(server) {
@@ -220,16 +197,11 @@ class Database extends SQLDataSource {
 
   /** Clients */
   async getClients() {
-    return this.knex.from("clients").select("*").cache(DB_CACHE_DURATION);
+    return this.knex.from("clients").select("*");
   }
 
   async getClientById(id) {
-    return this.knex
-      .first()
-      .from("clients")
-      .select("*")
-      .where("id", id)
-      .cache(DB_CACHE_DURATION);
+    return this.knex.first().from("clients").select("*").where("id", id);
   }
 
   async createClient(client) {
@@ -269,12 +241,7 @@ class Database extends SQLDataSource {
   }
 
   async getVpnIpById(id) {
-    return this.knex
-      .first()
-      .from("vpn_ips")
-      .select("*")
-      .where("id", id)
-      .cache(DB_CACHE_DURATION);
+    return this.knex.first().from("vpn_ips").select("*").where("id", id);
   }
 }
 
