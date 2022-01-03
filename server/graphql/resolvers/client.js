@@ -2,9 +2,9 @@ const validator = require("../../validator");
 const { UserInputError } = require("apollo-server");
 
 const convertClientToObject = async (client, db) => {
-  const ipObj = await db.getVpnIpById(client.ip_id);
-  const vpnNetwork = await db.getVpnNetworkById(ipObj.net_id);
-  const keypair = await db.getKeypairById(client.key_id);
+  const ipObj = await db.getVpnIpById(client.vpn_ip_id);
+  const vpnNetwork = await db.getVpnNetworkById(ipObj.vpn_network_id);
+  const keypair = await db.getKeypairById(client.keypair_id);
   const dnsServer = await db.getDnsServerById(client.dns_server_id);
 
   return {
@@ -93,12 +93,12 @@ module.exports = {
         throw new UserInputError(`IP Address '${ipAddress}' is invalid`);
       }
       // validate that ip address is in range of vpn_network
-      const ip_address_in_range = validator.isInRange(
+      const ipInRange = validator.isInRange(
         ipAddress,
         vpnNetwork.ip_address,
         vpnNetwork.subnetmask
       );
-      if (!ip_address_in_range) {
+      if (!ipInRange) {
         throw new UserInputError(
           `IP Address '${ipAddress}' is not in range of VPN Network (${vpnNetwork.ip_address})`
         );
@@ -112,7 +112,7 @@ module.exports = {
       // Create VPN IP
       let vpnIp = {
         address: ipAddress,
-        net_id: vpnNetworkId,
+        vpn_network_id: vpnNetworkId,
       };
       vpnIp = await dataSources.db.createVpnIp(vpnIp);
 
@@ -122,8 +122,8 @@ module.exports = {
         description,
         dns_server_id: dnsServerId,
         keepalive: keepaliveInterval,
-        key_id: keypairId,
-        ip_id: vpnIp.id,
+        keypair_id: keypairId,
+        vpn_ip_id: vpnIp.id,
       };
 
       return convertClientToObject(

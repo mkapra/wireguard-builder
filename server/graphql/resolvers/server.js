@@ -2,8 +2,8 @@ const validator = require("../../validator");
 const { UserInputError } = require("apollo-server");
 
 const convertServerToObject = async (server, db) => {
-  const vpnNetwork = await db.getVpnNetworkById(server.net_id);
-  const keypair = await db.getKeypairById(server.key_id);
+  const vpnNetwork = await db.getVpnNetworkById(server.vpn_network_id);
+  const keypair = await db.getKeypairById(server.keypair_id);
 
   return {
     ...server,
@@ -51,30 +51,30 @@ module.exports = {
       { dataSources: { db } }
     ) => {
       // validate keypair exists
-      const keypair_exists = await db.getKeypairById(keypair);
-      if (!keypair_exists) {
+      const keypairExists = await db.getKeypairById(keypair);
+      if (!keypairExists) {
         throw new UserInputError(`Keypair with id ${keypair} does not exist`);
       }
 
       // check that keypair is not used by other servers
-      const keypair_used = await db.getServerByKeypair(keypair);
-      if (keypair_used) {
+      const serverOfKeypair = await db.getServerByKeypair(keypair);
+      if (serverOfKeypair) {
         throw new UserInputError(
-          `Keypair with id ${keypair} is already used by server ${keypair_used.name}`
+          `Keypair with id ${keypair} is already used by server ${serverOfKeypair.name}`
         );
       }
 
       // validate vpn_network exists
-      const vpn_network_exists = await db.getVpnNetworkById(vpn_network);
-      if (!vpn_network_exists) {
+      const vpnNetworkExists = await db.getVpnNetworkById(vpn_network);
+      if (!vpnNetworkExists) {
         throw new UserInputError(
           `Vpn network with id ${vpn_network} does not exist`
         );
       }
 
       // validate that ip address is in range of vpn network
-      const vpn_network_range = vpn_network_exists.subnetmask;
-      const vpn_ip = vpn_network_exists.ip_address;
+      const vpn_network_range = vpnNetworkExists.subnetmask;
+      const vpn_ip = vpnNetworkExists.ip_address;
       const ip_address_in_range = validator.isInRange(
         ip_address,
         vpn_ip,
@@ -88,19 +88,19 @@ module.exports = {
 
       // Create server object
       const server = {
-        name: name,
-        description: description,
-        forward_interface: forward_interface,
-        ip_address: ip_address,
-        key_id: keypair,
-        net_id: vpn_network,
+        name,
+        description,
+        forward_interface,
+        ip_address,
+        keypair_id: keypair,
+        vpn_network_id: vpn_network,
       };
 
       // Create server
       const createdServer = await db.createServer(server);
       // delete net_id from server and add whole vpn network instead
-      createdServer.vpn_network = vpn_network_exists;
-      createdServer.keypair = keypair_exists;
+      createdServer.vpn_network = vpnNetworkExists;
+      createdServer.keypair = keypairExists;
 
       return createdServer;
     },
