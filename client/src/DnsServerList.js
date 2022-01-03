@@ -1,5 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
-import { React, useState } from "react";
+import React, { useState } from "react";
 
 import Table from "./Table";
 import Searchbar from "./Searchbar";
@@ -32,6 +32,7 @@ const DnsServerList = () => {
       {!error && (
         <>
           <button
+            type="button"
             onClick={() => setIsOpen(true)}
             className="mb-4 float-right flex space-x-2 bg-blue-500 items-center justify-center py-2 px-4 rounded-full text-blue-100 hover:bg-orange-400 hover:text-gray-800 transition delay-75"
           >

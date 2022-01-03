@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
 import PropTypes from "prop-types";
@@ -50,19 +50,18 @@ const NewDnsServer = ({ setIsOpen }) => {
     }
   };
 
+  // close modal if user clicks outside of modal
   const handleClick = (target) => {
     if (!target.id) setIsOpen(false);
   };
 
   useEffect(() => {
     document.addEventListener("keydown", handleEscape);
-    // document.addEventListener("click", handleClick);
 
     return () => {
       document.removeEventListener("keydown", handleEscape);
-      // document.removeEventListener("click", handleClick);
     };
-  });
+  }, []);
 
   return (
     <div
@@ -72,7 +71,7 @@ const NewDnsServer = ({ setIsOpen }) => {
       <div id="modal" className="w-1/2 bg-gray-100 shadow-lg p-4 space-y-4">
         <div className="flex justify-between">
           <h2 className="text-2xl font-bold">Create new DNS Server</h2>
-          <button onClick={() => setIsOpen(false)}>
+          <button type="button" onClick={() => setIsOpen(false)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-8 w-8"

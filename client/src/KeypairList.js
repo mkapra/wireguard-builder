@@ -1,6 +1,6 @@
 import { useQuery, useMutation, gql } from "@apollo/client";
 import { toast } from "react-toastify";
-import { React } from "react";
+import React from "react";
 
 import Table from "./Table";
 import Error from "./Error";
