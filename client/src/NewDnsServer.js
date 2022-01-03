@@ -52,7 +52,7 @@ const NewDnsServer = ({ setIsOpen }) => {
 
   // close modal if user clicks outside of modal
   const handleClick = (target) => {
-    if (!target.id) setIsOpen(false);
+    if (!target.id && target.type !== "submit") setIsOpen(false);
   };
 
   useEffect(() => {
