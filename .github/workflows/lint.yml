@@ -35,7 +35,6 @@ jobs:
           eslint_dir: server/
           prettier: true
           prettier_dir: server/
-          auto_fix: true
 
       - name: Pull changes from branch
         uses: actions/checkout@v2
@@ -54,4 +53,3 @@ jobs:
           eslint_dir: client/
           prettier: true
           prettier_dir: client/
-          auto_fix: true
