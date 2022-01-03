@@ -18,18 +18,22 @@ jobs:
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
+        if: github.actor != 'dependabot[bot]
 
       - name: Set up Node.js
         uses: actions/setup-node@v1
+        if: github.actor != 'dependabot[bot]
         with:
           node-version: 16
 
       # ESLint and Prettier must be in `package.json`
       - name: Install Node.js dependencies for server
         run: cd server && npm ci
+        if: github.actor != 'dependabot[bot]
 
       - name: Run linters for server
         uses: wearerequired/lint-action@v1
+        if: github.actor != 'dependabot[bot]
         with:
           eslint: true
           eslint_dir: server/
@@ -38,15 +42,18 @@ jobs:
 
       - name: Pull changes from branch
         uses: actions/checkout@v2
+        if: github.actor != 'dependabot[bot]
         with:
           path: .
           ref: ${{ github.ref }}
 
       # ESLint and Prettier must be in `package.json`
       - name: Install Node.js dependencies for client
+        if: github.actor != 'dependabot[bot]
         run: cd client && npm ci
 
       - name: Run linters for client
+        if: github.actor != 'dependabot[bot]
         uses: wearerequired/lint-action@v1
         with:
           eslint: true
