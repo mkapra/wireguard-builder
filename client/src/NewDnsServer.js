@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import PropTypes from "prop-types";
 
 import { GET_DNS_SERVERS } from "./DnsServerList";
+import Button from "./Button";
 
 const CREATE_DNS_SERVER = gql`
   mutation CreateDnsServer($name: String!, $ip: String!, $description: String) {
@@ -71,22 +72,24 @@ const NewDnsServer = ({ setIsOpen }) => {
       <div id="modal" className="w-1/2 bg-gray-100 shadow-lg p-4 space-y-4">
         <div className="flex justify-between">
           <h2 className="text-2xl font-bold">Create new DNS Server</h2>
-          <button type="button" onClick={() => setIsOpen(false)}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-8 w-8"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
-          </button>
+          <Button onClick={() => setIsOpen(false)}>
+            <div className="flex space-x-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-8 w-8"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
+          </Button>
         </div>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
