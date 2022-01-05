@@ -200,6 +200,30 @@ class Database extends SQLDataSource {
     return this.knex.from("clients").select("*");
   }
 
+  async getClientsByServerId(serverId) {
+    const server = await this.getServerById(serverId);
+    return this.knex
+      .from("clients")
+      .select("clients.*")
+      .join("vpn_ip_addresses", "vpn_ip_addresses.id", "=", "clients.vpn_ip_id")
+      .where("vpn_ip_addresses.vpn_network_id", server.vpn_network_id);
+  }
+
+  async getServerByClientId(clientId) {
+    const client = await this.getClientById(clientId);
+    const vpnNetwork = await this.knex
+      .first()
+      .from("vpn_ip_addresses")
+      .select("vpn_network_id")
+      .where("id", client.vpn_ip_id);
+
+    return this.knex
+      .first()
+      .from("servers")
+      .select("*")
+      .where("vpn_network_id", vpnNetwork.vpn_network_id);
+  }
+
   async getClientById(id) {
     return this.knex.first().from("clients").select("*").where("id", id);
   }

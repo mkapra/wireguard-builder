@@ -10,6 +10,9 @@ module.exports = {
     vpn_network: async (parent, _, { dataSources }) => {
       return dataSources.db.getVpnNetworkById(parent.vpn_network_id);
     },
+    clients: async (parent, _, { dataSources }) => {
+      return dataSources.db.getClientsByServerId(parent.id);
+    },
   },
   Query: {
     servers: async (_, { name }, { dataSources }) => {
