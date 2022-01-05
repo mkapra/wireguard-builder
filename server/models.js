@@ -271,6 +271,29 @@ class Database extends SQLDataSource {
       .select("*")
       .where("id", id);
   }
+
+  async getServerByKeypairId(keypairId) {
+    return this.knex
+      .first()
+      .from("servers")
+      .select("*")
+      .where("keypair_id", keypairId);
+  }
+
+  async getClientByKeypairId(keypairId) {
+    return this.knex
+      .first()
+      .from("clients")
+      .select("*")
+      .where("keypair_id", keypairId);
+  }
+
+  async getClientsByDnsServerId(dnsServerId) {
+    return this.knex
+      .from("clients")
+      .select("*")
+      .where("dns_server_id", dnsServerId);
+  }
 }
 
 module.exports = Database;

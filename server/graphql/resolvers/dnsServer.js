@@ -3,6 +3,11 @@ const { UserInputError } = require("apollo-server");
 
 module.exports = {
   // Resolver for the keypair.
+  DnsServer: {
+    used_by_clients: async (parent, _, { dataSources }) => {
+      return dataSources.db.getClientsByDnsServerId(parent.id);
+    },
+  },
   Query: {
     dnsServers: async (_, { name }, { dataSources }) => {
       const dnsServers = await dataSources.db.getDnsServers();
