@@ -240,7 +240,7 @@ const createClients = async () => {
             .inTable("vpn_ip_addresses")
             .onDelete("CASCADE");
 
-          table.unique(["keypair_id"]);
+          table.unique(["keypair_id", "vpn_ip_id"]);
         })
         .then(() => {
           console.log("Table clients created");

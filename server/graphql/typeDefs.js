@@ -176,6 +176,8 @@ module.exports = gql`
     keypair: Keypair!
     "The vpn network that should be used by the server"
     vpn_network: VpnNetwork!
+    "Clients that are associated with the server"
+    clients: [Client!]
   }
 
   "A wireguard client"
