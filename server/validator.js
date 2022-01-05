@@ -40,15 +40,14 @@ const Validator = {
 
   isValidPort: (port) => {
     if (port !== undefined && port !== null && port !== "") {
-      const intPort = parseInt(port);
-      if (intPort < 0 || intPort > 65535) {
-        return null, false;
+      if (port < 0 || port > 65535) {
+        return false;
       }
 
-      return port, true;
+      return true;
     }
 
-    return null, false;
+    return false;
   },
 };
 

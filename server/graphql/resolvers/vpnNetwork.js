@@ -56,8 +56,8 @@ module.exports = {
       }
 
       // check for valid port
-      const { parsedPort, isValid } = validator.isValidPort(port);
-      if (!isValid) {
+      const isValidPort = validator.isValidPort(port);
+      if (!isValidPort) {
         throw new UserInputError(`Invalid port: ${port}`);
       }
 
@@ -66,7 +66,7 @@ module.exports = {
         description,
         interface: serverIface,
         name,
-        port: parsedPort,
+        port,
         ip_address: ipAddress,
         subnetmask: sbnm,
       };
@@ -109,8 +109,8 @@ module.exports = {
       }
 
       // check for valid port
-      const { parsedPort, isValid } = validator.isValidPort(port);
-      if (!isValid) {
+      const isValidPort = validator.isValidPort(port);
+      if (!isValidPort) {
         throw new UserInputError(`Invalid port: ${port}`);
       }
 
@@ -119,7 +119,7 @@ module.exports = {
         name: name,
         description,
         serverIface,
-        port: parsedPort,
+        port,
         ip_address: ipAddress,
         subnetmask: sbnm,
       };

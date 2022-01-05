@@ -19,4 +19,10 @@ module.exports = {
     ...serverResolvers.Mutation,
     ...clientResolvers.Mutation,
   },
+  Client: {
+    ...clientResolvers.Client,
+  },
+  Server: {
+    ...serverResolvers.Server,
+  },
 };

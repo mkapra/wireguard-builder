@@ -1,31 +1,30 @@
 const validator = require("../../validator");
 const { UserInputError } = require("apollo-server");
 
-const convertClientToObject = async (client, db) => {
-  const ipObj = await db.getVpnIpById(client.vpn_ip_id);
-  const vpnNetwork = await db.getVpnNetworkById(ipObj.vpn_network_id);
-  const keypair = await db.getKeypairById(client.keypair_id);
-  const dnsServer = await db.getDnsServerById(client.dns_server_id);
-
-  return {
-    ...client,
-    vpn_network: vpnNetwork,
-    dns_server: dnsServer,
-    ip_address: ipObj.address,
-    keepalive_interval: client.keepalive,
-    keypair,
-  };
-};
-
 module.exports = {
+  Client: {
+    keypair: async (parent, _, { dataSources }) => {
+      return dataSources.db.getKeypairById(parent.keypair_id);
+    },
+    dns_server: async (parent, _, { dataSources }) => {
+      return dataSources.db.getDnsServerById(parent.dns_server_id);
+    },
+    vpn_network: async (parent, _, { dataSources }) => {
+      const vpnIp = await dataSources.db.getVpnIpById(parent.vpn_ip_id);
+      return dataSources.db.getVpnNetworkById(vpnIp.vpn_network_id);
+    },
+    ip_address: async (parent, _, { dataSources }) => {
+      const vpnIp = await dataSources.db.getVpnIpById(parent.vpn_ip_id);
+      return vpnIp.address;
+    },
+    keepalive_interval: async (parent) => {
+      return parent.keepalive || 25;
+    },
+  },
   // Resolver for the server type
   Query: {
     clients: async (_, { name }, { dataSources }) => {
-      let clients = await dataSources.db.getClients();
-      // Map ids of references to objects
-      clients = clients.map(async (client) =>
-        convertClientToObject(client, dataSources.db)
-      );
+      const clients = await dataSources.db.getClients();
 
       // Return all clients if no filter should be applied
       if (name === undefined || name === null || name === "") {
@@ -40,10 +39,7 @@ module.exports = {
       }
     },
     client: async (_, { id }, { dataSources }) => {
-      return convertClientToObject(
-        await dataSources.db.getClientById(id),
-        dataSources.db
-      );
+      await dataSources.db.getClientById(id);
     },
   },
   Mutation: {
@@ -126,10 +122,7 @@ module.exports = {
         vpn_ip_id: vpnIp.id,
       };
 
-      return convertClientToObject(
-        await dataSources.db.createClient(client),
-        dataSources.db
-      );
+      return dataSources.db.createClient(client);
     },
   },
 };

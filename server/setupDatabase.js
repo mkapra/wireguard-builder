@@ -222,7 +222,6 @@ const createClients = async () => {
           table.string("description");
           table.integer("keepalive").defaultTo(300);
           table.integer("dns_server_id").notNullable();
-          table.integer("vpn_network_id").notNullable();
           table.integer("keypair_id").notNullable();
           table.integer("vpn_ip_id").notNullable();
 
@@ -230,10 +229,6 @@ const createClients = async () => {
             .foreign("dns_server_id")
             .references("id")
             .inTable("dns_servers");
-          table
-            .foreign("vpn_network_id")
-            .references("id")
-            .inTable("vpn_networks");
           table
             .foreign("keypair_id")
             .references("id")

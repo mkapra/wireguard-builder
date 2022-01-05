@@ -140,7 +140,7 @@ class Database extends SQLDataSource {
       .first()
       .from("servers")
       .select("*")
-      .where("key_id", keypairId);
+      .where("keypair_id", keypairId);
   }
 
   async getServers() {
@@ -158,8 +158,8 @@ class Database extends SQLDataSource {
         "name",
         "description",
         "forward_interface",
-        "net_id",
-        "key_id",
+        "vpn_network_id",
+        "keypair_id",
         "ip_address",
       ])
       .insert(server)
@@ -180,8 +180,8 @@ class Database extends SQLDataSource {
         "name",
         "description",
         "forward_interface",
-        "net_id",
-        "key_id",
+        "vpn_network_id",
+        "keypair_id",
         "ip_address",
       ])
       .where("id", id)
@@ -212,8 +212,8 @@ class Database extends SQLDataSource {
         "description",
         "dns_server_id",
         "keepalive",
-        "key_id",
-        "ip_id",
+        "keypair_id",
+        "vpn_ip_id",
       ])
       .insert(client)
       .then((res) => res[0])
@@ -227,8 +227,8 @@ class Database extends SQLDataSource {
   }
 
   async createVpnIp(vpnIp) {
-    return this.knex("vpn_ips")
-      .returning(["id", "address", "net_id"])
+    return this.knex("vpn_ip_addresses")
+      .returning(["id", "address", "vpn_network_id"])
       .insert(vpnIp)
       .then((res) => res[0])
       .catch((err) => {
@@ -241,7 +241,7 @@ class Database extends SQLDataSource {
   }
 
   async getVpnIpById(id) {
-    return this.knex.first().from("vpn_ips").select("*").where("id", id);
+    return this.knex.first().from("vpn_ip_addresses").select("*").where("id", id);
   }
 }
 
