@@ -25,7 +25,6 @@ const Table = ({ headings, data, onDelete, onEdit }) => {
             {Object.entries(row).map(
               ([key, value]) =>
                 // skip value if value starts with __
-                // console.log("IS:", key, typeof value === "object", value) &&
                 !key.startsWith("_") &&
                 (typeof value === "object" && value !== null ? (
                   <td
