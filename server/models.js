@@ -241,7 +241,11 @@ class Database extends SQLDataSource {
   }
 
   async getVpnIpById(id) {
-    return this.knex.first().from("vpn_ip_addresses").select("*").where("id", id);
+    return this.knex
+      .first()
+      .from("vpn_ip_addresses")
+      .select("*")
+      .where("id", id);
   }
 }
 
