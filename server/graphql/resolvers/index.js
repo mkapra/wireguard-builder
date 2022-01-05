@@ -25,4 +25,7 @@ module.exports = {
   Server: {
     ...serverResolvers.Server,
   },
+  Keypair: {
+    ...keypairResolvers.Keypair,
+  },
 };

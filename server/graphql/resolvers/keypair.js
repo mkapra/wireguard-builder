@@ -2,6 +2,14 @@ const { ApolloError } = require("apollo-server");
 
 module.exports = {
   // Resolver for the keypair.
+  Keypair: {
+    used_by_client: async (parent, _, { dataSources }) => {
+      return dataSources.db.getClientByKeypairId(parent.id);
+    },
+    used_by_server: async (parent, _, { dataSources }) => {
+      return dataSources.db.getServerByKeypairId(parent.id);
+    },
+  },
   Query: {
     keypairs: async (_, __, { dataSources }) => {
       return dataSources.db.getKeypairs();

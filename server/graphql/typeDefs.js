@@ -128,6 +128,10 @@ module.exports = gql`
     private_key: String!
     "The public key of the keypair"
     public_key: String!
+    "The name of the client where the keypair is used"
+    used_by_client: Client
+    "The name of the server where the keypair is used"
+    used_by_server: Server
   }
 
   "A DNS server"
