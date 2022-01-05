@@ -78,6 +78,19 @@ module.exports = {
           `Keypair with id '${keypairId}' does not exist`
         );
       }
+      // Check if keypair is used by other server or client
+      const clientUsed = await dataSources.db.getClientByKeypairId(keypairId);
+      if (clientUsed) {
+        throw new UserInputError(
+          `Keypair with id '${keypairId}' is already used by client '${clientUsed.name}'`
+        );
+      }
+      const serverUsed = await dataSources.db.getServerByKeypairId(keypairId);
+      if (serverUsed) {
+        throw new UserInputError(
+          `Keypair with id '${keypairId}' is already used by server '${serverUsed.name}'`
+        );
+      }
 
       // validate existing vpn network
       const vpnNetwork = await dataSources.db.getVpnNetworkById(vpnNetworkId);
