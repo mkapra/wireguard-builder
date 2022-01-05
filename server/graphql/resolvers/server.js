@@ -45,16 +45,31 @@ module.exports = {
           vpn_network: vpnNetworkId,
         },
       },
-      { dataSources: { db } }
+      { dataSources }
     ) => {
       // validate keypair exists
-      const keypairExists = await db.getKeypairById(keypairId);
+      const keypairExists = await dataSources.db.getKeypairById(keypairId);
       if (!keypairExists) {
         throw new UserInputError(`Keypair with id ${keypairId} does not exist`);
       }
+      // Check if keypair is used by other server or client
+      const clientUsed = await dataSources.db.getClientByKeypairId(keypairId);
+      if (clientUsed) {
+        throw new UserInputError(
+          `Keypair with id '${keypairId}' is already used by client '${clientUsed.name}'`
+        );
+      }
+      const serverUsed = await dataSources.db.getServerByKeypairId(keypairId);
+      if (serverUsed) {
+        throw new UserInputError(
+          `Keypair with id '${keypairId}' is already used by server '${serverUsed.name}'`
+        );
+      }
 
       // check that keypair is not used by other servers
-      const serverOfKeypair = await db.getServerByKeypair(keypairId);
+      const serverOfKeypair = await dataSources.db.getServerByKeypair(
+        keypairId
+      );
       if (serverOfKeypair) {
         throw new UserInputError(
           `Keypair with id ${keypairId} is already used by server ${serverOfKeypair.name}`
@@ -62,7 +77,9 @@ module.exports = {
       }
 
       // validate vpn_network exists
-      const vpnNetworkExists = await db.getVpnNetworkById(vpnNetworkId);
+      const vpnNetworkExists = await dataSources.db.getVpnNetworkById(
+        vpnNetworkId
+      );
       if (!vpnNetworkExists) {
         throw new UserInputError(
           `Vpn network with id ${vpnNetworkId} does not exist`
@@ -92,7 +109,7 @@ module.exports = {
         keypair_id: keypairId,
         vpn_network_id: vpnNetworkId,
       };
-      const createdServer = await db.createServer(server);
+      const createdServer = await dataSources.db.createServer(server);
 
       return createdServer;
     },
