@@ -200,10 +200,6 @@ class Database extends SQLDataSource {
     return this.knex.from("clients").select("*");
   }
 
-  // select clients.*
-  // from clients
-  // INNER JOIN vpn_ip_addresses ON vpn_ip_addresses.id = clients.vpn_ip_id
-  // WHERE vpn_ip_addresses.vpn_network_id = 1;
   async getClientsByServerId(serverId) {
     const server = await this.getServerById(serverId);
     return this.knex
@@ -211,6 +207,21 @@ class Database extends SQLDataSource {
       .select("clients.*")
       .join("vpn_ip_addresses", "vpn_ip_addresses.id", "=", "clients.vpn_ip_id")
       .where("vpn_ip_addresses.vpn_network_id", server.vpn_network_id);
+  }
+
+  async getServerByClientId(clientId) {
+    const client = await this.getClientById(clientId);
+    const vpnNetwork = await this.knex
+      .first()
+      .from("vpn_ip_addresses")
+      .select("vpn_network_id")
+      .where("id", client.vpn_ip_id);
+
+    return this.knex
+      .first()
+      .from("servers")
+      .select("*")
+      .where("vpn_network_id", vpnNetwork.vpn_network_id);
   }
 
   async getClientById(id) {

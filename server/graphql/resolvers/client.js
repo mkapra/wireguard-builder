@@ -20,6 +20,9 @@ module.exports = {
     keepalive_interval: async (parent) => {
       return parent.keepalive || 25;
     },
+    server: async (parent, _, { dataSources }) => {
+      return dataSources.db.getServerByClientId(parent.id);
+    },
   },
   // Resolver for the server type
   Query: {

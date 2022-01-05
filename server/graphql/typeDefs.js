@@ -198,5 +198,7 @@ module.exports = gql`
     keepalive_interval: Int
     "The keypair of the client"
     keypair: Keypair!
+    "The server that the client is associated with"
+    server: Server
   }
 `;
