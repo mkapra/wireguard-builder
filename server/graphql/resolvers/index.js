@@ -28,4 +28,7 @@ module.exports = {
   Keypair: {
     ...keypairResolvers.Keypair,
   },
+  DnsServer: {
+    ...dnsServerResolvers.DnsServer,
+  },
 };

@@ -144,6 +144,8 @@ module.exports = gql`
     description: String
     "The IP address of the DNS server"
     ip_address: String!
+    "The clients that use the DNS server"
+    used_by_clients: [Client!]
   }
 
   "The definition of a vpn network"

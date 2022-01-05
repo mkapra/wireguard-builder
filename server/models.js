@@ -287,6 +287,13 @@ class Database extends SQLDataSource {
       .select("*")
       .where("keypair_id", keypairId);
   }
+
+  async getClientsByDnsServerId(dnsServerId) {
+    return this.knex
+      .from("clients")
+      .select("*")
+      .where("dns_server_id", dnsServerId);
+  }
 }
 
 module.exports = Database;
