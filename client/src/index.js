@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import "./index.css";
 import App from "./App";
+import Home from "./Home";
 import KeypairList from "./KeypairList";
 import DnsServerList from "./DnsServerList";
 import VpnNetworkList from "./VpnNetworkList";
@@ -25,7 +26,7 @@ ReactDOM.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>
-            <Route index element={<KeypairList />} />
+            <Route index element={<Home />} />
             <Route path="/keypairs" element={<KeypairList />} />
             <Route path="/dns_servers" element={<DnsServerList />} />
             <Route path="/vpn_networks" element={<VpnNetworkList />} />

@@ -1,5 +1,6 @@
-import { NavLink } from "react-router-dom";
 import React from "react";
+
+import NavbarLink from "./NavbarLink";
 
 const Navbar = () => {
   return (
@@ -24,15 +25,7 @@ const Navbar = () => {
       </a>
 
       <nav className="flex flex-col text-blue-100 space-y-2">
-        <NavLink
-          to="/"
-          className={({ isActive }) => {
-            return (
-              "flex space-x-2 py-2 px-4 transition delay-75 rounded-lg hover:bg-orange-400 hover:bg-opacity-80 hover:text-gray-800" +
-              (isActive ? " bg-orange-400 text-gray-800" : "")
-            );
-          }}
-        >
+        <NavbarLink to="/">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -48,16 +41,8 @@ const Navbar = () => {
             />
           </svg>
           <span>Home</span>
-        </NavLink>
-        <NavLink
-          to="/keypairs"
-          className={({ isActive }) => {
-            return (
-              "flex space-x-2 py-2 px-4 transition delay-75 rounded-lg hover:bg-orange-400 hover:bg-opacity-80 hover:text-gray-800" +
-              (isActive ? " bg-orange-400 text-gray-800" : "")
-            );
-          }}
-        >
+        </NavbarLink>
+        <NavbarLink to="/keypairs">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -73,16 +58,8 @@ const Navbar = () => {
             />
           </svg>
           <span>Keypairs</span>
-        </NavLink>
-        <NavLink
-          to="/dns_servers"
-          className={({ isActive }) => {
-            return (
-              "flex space-x-2 py-2 px-4 transition delay-75 rounded-lg hover:bg-orange-400 hover:bg-opacity-80 hover:text-gray-800" +
-              (isActive ? " bg-orange-400 text-gray-800" : "")
-            );
-          }}
-        >
+        </NavbarLink>
+        <NavbarLink to="/dns_servers">
           <svg
             className="w-6 h-6"
             fill="none"
@@ -98,16 +75,8 @@ const Navbar = () => {
             ></path>
           </svg>
           <span>DNS Servers</span>
-        </NavLink>
-        <NavLink
-          to="/vpn_networks"
-          className={({ isActive }) => {
-            return (
-              "flex space-x-2 py-2 px-4 transition delay-75 rounded-lg hover:bg-orange-400 hover:bg-opacity-80 hover:text-gray-800" +
-              (isActive ? " bg-orange-400 text-gray-800" : "")
-            );
-          }}
-        >
+        </NavbarLink>
+        <NavbarLink to="/vpn_networks">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
@@ -123,16 +92,8 @@ const Navbar = () => {
             />
           </svg>
           <span>VPN Networks</span>
-        </NavLink>
-        <NavLink
-          to="/clients"
-          className={({ isActive }) => {
-            return (
-              "flex space-x-2 py-2 px-4 transition delay-75 rounded-lg hover:bg-orange-400 hover:bg-opacity-80 hover:text-gray-800" +
-              (isActive ? " bg-orange-400 text-gray-800" : "")
-            );
-          }}
-        >
+        </NavbarLink>
+        <NavbarLink to="/clients">
           <svg
             className="w-6 h-6"
             fill="none"
@@ -148,16 +109,8 @@ const Navbar = () => {
             ></path>
           </svg>
           <span>Clients</span>
-        </NavLink>
-        <NavLink
-          to="/servers"
-          className={({ isActive }) => {
-            return (
-              "flex space-x-2 py-2 px-4 transition delay-75 rounded-lg hover:bg-orange-400 hover:bg-opacity-80 hover:text-gray-800" +
-              (isActive ? " bg-orange-400 text-gray-800" : "")
-            );
-          }}
-        >
+        </NavbarLink>
+        <NavbarLink to="/servers">
           <svg
             className="w-6 h-6"
             fill="none"
@@ -173,7 +126,7 @@ const Navbar = () => {
             ></path>
           </svg>
           <span>Servers</span>
-        </NavLink>
+        </NavbarLink>
       </nav>
     </div>
   );
