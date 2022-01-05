@@ -49,20 +49,23 @@ const NewVpnNetwork = ({ setIsOpen }) => {
       variables: {
         name,
         description,
-        ip_address: ipAddress,
-        subnetmask,
-        port,
+        ipAddress: ipAddress,
+        subnetmask: parseInt(subnetmask) || null,
+        port: parseInt(port),
         interface: wgInterface,
       },
     })
-      .catch((err) => {
-        toast.error(err.message, { toastId: "new-vpn-network-error" });
-      })
       .then(() => {
         toast.success("VPN Network created successfully!", {
           toastId: "new-vpn-network-success",
         });
         setIsOpen(false);
+      })
+      .catch((err) => {
+        toast.error(
+          `There was an error while creating the VPN Network: ${err.message}`,
+          { toastId: "new-vpn-network-error" }
+        );
       });
   };
 
