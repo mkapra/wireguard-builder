@@ -5,7 +5,7 @@ const Searchbar = ({ placeholder, search, setSearch }) => {
   return (
     <div>
       <input
-        className="p-2 border w-full"
+        className="p-2 border w-full rounded"
         type="text"
         placeholder={placeholder}
         value={search}
