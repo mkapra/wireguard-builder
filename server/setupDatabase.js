@@ -97,10 +97,10 @@ const createVpnNetworks = async () => {
           table.string("description");
           table.string("ip_address").notNullable();
           table.integer("subnetmask").defaultTo(24);
-          table.integer("port").defaultTo(51820);
+          table.integer("port").notNullable();
           table.string("interface").notNullable();
 
-          table.unique(["name", "ip_address", "port"]);
+          table.unique(["name", "ip_address", "port", "interface"]);
         })
         .then(async () => {
           console.log("Table vpn_networks created");
