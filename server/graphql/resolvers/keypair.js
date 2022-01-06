@@ -17,6 +17,9 @@ module.exports = {
     keypair: async (_, { id }, { dataSources }) => {
       return dataSources.db.getKeypairById(id);
     },
+    unusedKeypairs: async (_, __, { dataSources }) => {
+      return dataSources.db.getUnusedKeypairs();
+    }
   },
   Mutation: {
     generateKeypair: async (_, __, { dataSources }) => {

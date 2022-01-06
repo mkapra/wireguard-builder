@@ -6,6 +6,8 @@ module.exports = gql`
     keypairs: [Keypair!]
     "Returns the keypair with the given id"
     keypair("The id of the keypair that should be returned" id: ID!): Keypair
+    "Returns all unused keypairs"
+    unusedKeypairs: [Keypair!]
 
     "Returns all the DNS servers"
     dnsServers(

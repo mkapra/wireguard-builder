@@ -294,6 +294,25 @@ class Database extends SQLDataSource {
       .select("*")
       .where("dns_server_id", dnsServerId);
   }
+
+  async getUnusedKeypairs() {
+    const unusedServer = await this.knex
+      .from("servers")
+      .select("keypair_id")
+      .then((res) => res.map((r) => r.keypair_id));
+
+    const unusedClient = await this.knex
+      .from("clients")
+      .select("keypair_id")
+      .then((res) => res.map((r) => r.keypair_id));
+
+    const unusedKeypairs = [...unusedServer, ...unusedClient];
+    // Return keys that are not used by any server or client
+    return this.knex
+      .from("keypairs")
+      .select("*")
+      .whereNotIn("id", unusedKeypairs);
+  }
 }
 
 module.exports = Database;
