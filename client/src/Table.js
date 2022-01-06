@@ -23,13 +23,13 @@ const Table = ({ headings, data, onDelete, onEdit }) => {
           <tr key={row.id}>
             {/* iterate over object to get the values as table data */}
             {Object.entries(row).map(
-              ([key, value]) =>
+              ([key, value], index) =>
                 // skip value if value starts with __
                 !key.startsWith("_") &&
                 (typeof value === "object" && value !== null ? (
                   <td
                     className="border border-collapse px-2 py-1 text-center"
-                    key={value.id}
+                    key={index}
                   >
                     <Link
                       className="text-blue-500 hover:text-blue-800"
@@ -41,7 +41,7 @@ const Table = ({ headings, data, onDelete, onEdit }) => {
                 ) : (
                   <td
                     className="border border-collapse px-2 py-1 text-center"
-                    key={value}
+                    key={index}
                   >
                     {value}
                   </td>
