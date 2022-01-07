@@ -50,7 +50,7 @@ FormInputField.propTypes = {
   placeholder: PropTypes.string.isRequired,
   setValue: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 };
 
 export default FormInputField;
