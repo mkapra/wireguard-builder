@@ -1,8 +1,6 @@
-/* eslint-disable */
-
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { gql, useLazyQuery, useMutation } from "@apollo/client";
+import { gql, useQuery, useMutation } from "@apollo/client";
 import Loader from "react-loader-spinner";
 import { toast } from "react-toastify";
 
@@ -55,17 +53,12 @@ const NewClient = ({ setIsOpen }) => {
     refetchQueries: [{ query: GET_CLIENTS }, { query: GET_REFERENCES }],
   });
 
-  const [getReferences, { data, loading, error }] =
-    useLazyQuery(GET_REFERENCES);
+  const { data, loading, error } = useQuery(GET_REFERENCES);
   if (error) {
     toast.error("Could not fetch data from API: " + error.message, {
       toastId: "query-error",
     });
   }
-
-  useEffect(() => {
-    getReferences();
-  }, []);
 
   useEffect(() => {
     if (data) {
