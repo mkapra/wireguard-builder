@@ -47,12 +47,13 @@ module.exports = {
         subnetmask !== null &&
         subnetmask !== ""
       ) {
-        const { subnetmask, isValid } =
+        const [parsedSubnetmask, isValid] =
           !validator.isValidCidrSubnet(subnetmask);
+        console.log(isValid);
         if (!isValid) {
           throw new UserInputError(`Invalid subnetmask '${subnetmask}'`);
         }
-        sbnm = subnetmask;
+        sbnm = parsedSubnetmask;
       }
 
       // check for valid port
