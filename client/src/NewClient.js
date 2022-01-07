@@ -180,7 +180,7 @@ const NewClient = ({ setIsOpen }) => {
           setValue={setKeypair}
         />
 
-        <SubmitButton>Create VPN Network</SubmitButton>
+        <SubmitButton>Create Client</SubmitButton>
       </form>
     </Modal>
   );
