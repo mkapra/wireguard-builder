@@ -31,4 +31,7 @@ module.exports = {
   DnsServer: {
     ...dnsServerResolvers.DnsServer,
   },
+  VpnNetwork: {
+    ...vpnNetworkResolvers.VpnNetwork,
+  },
 };

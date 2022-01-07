@@ -12,7 +12,8 @@ module.exports = {
       return dataSources.db.getVpnNetworkById(vpnIp.vpn_network_id);
     },
     clients: async (parent, _, { dataSources }) => {
-      return dataSources.db.getClientsByServerId(parent.id);
+      const vpnNetworkIp = await dataSources.db.getVpnIpById(parent.vpn_ip_id);
+      return dataSources.db.getClientsByServerId(vpnNetworkIp.id);
     },
     ip_address: async (parent, _, { dataSources }) => {
       const vpnIp = await dataSources.db.getVpnIpById(parent.vpn_ip_id);

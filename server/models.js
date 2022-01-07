@@ -199,13 +199,12 @@ class Database extends SQLDataSource {
     return this.knex.from("clients").select("*");
   }
 
-  async getClientsByServerId(serverId) {
-    const server = await this.getServerById(serverId);
+  async getClientsByServerId(vpnNetworkId) {
     return this.knex
       .from("clients")
       .select("clients.*")
       .join("vpn_ip_addresses", "vpn_ip_addresses.id", "=", "clients.vpn_ip_id")
-      .where("vpn_ip_addresses.vpn_network_id", server.vpn_network_id);
+      .where("vpn_ip_addresses.vpn_network_id", vpnNetworkId);
   }
 
   async getServerByClientId(clientId) {
@@ -311,6 +310,23 @@ class Database extends SQLDataSource {
       .from("keypairs")
       .select("*")
       .whereNotIn("id", unusedKeypairs);
+  }
+
+  async getClientsByVpnNetworkId(vpnNetworkId) {
+    return this.knex
+      .from("clients")
+      .select("clients.*")
+      .join("vpn_ip_addresses", "vpn_ip_addresses.id", "=", "clients.vpn_ip_id")
+      .where("vpn_network_id", vpnNetworkId);
+  }
+
+  async getServerByVpnNetworkId(vpnNetworkId) {
+    return this.knex
+      .first()
+      .from("servers")
+      .select("servers.*")
+      .join("vpn_ip_addresses", "vpn_ip_addresses.id", "=", "servers.vpn_ip_id")
+      .where("vpn_network_id", vpnNetworkId);
   }
 }
 

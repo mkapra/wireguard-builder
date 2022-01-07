@@ -166,6 +166,10 @@ module.exports = gql`
     port: Int!
     "The interface of the VPN network"
     interface: String!
+    "The clients that are associated with the VPN network"
+    clients: [Client!]
+    "The server that is associated with the VPN network"
+    server: Server
   }
 
   "A wireguard server"
