@@ -158,9 +158,8 @@ class Database extends SQLDataSource {
         "name",
         "description",
         "forward_interface",
-        "vpn_network_id",
         "keypair_id",
-        "ip_address",
+        "vpn_ip_id",
       ])
       .insert(server)
       .then((res) => res[0])
