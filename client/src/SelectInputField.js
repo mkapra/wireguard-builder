@@ -1,6 +1,5 @@
-/* eslint-disable */
 import React from "react";
-import PropTypes from "prop-types";
+import PropTypes, { object } from "prop-types";
 
 const SelectInputField = ({
   labelName,
@@ -8,7 +7,6 @@ const SelectInputField = ({
   options,
   secondField,
   setValue,
-  value,
 }) => {
   return (
     <div className="flex flex-col space-y-1">
@@ -39,6 +37,7 @@ SelectInputField.propTypes = {
   secondField: PropTypes.string,
   setValue: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(object).isRequired,
 };
 
 export default SelectInputField;
