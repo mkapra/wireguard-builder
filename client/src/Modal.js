@@ -6,7 +6,8 @@ import Button from "./Button";
 const Modal = ({ setIsOpen, children, heading }) => {
   // close modal if user clicks outside of modal
   const handleClick = (target) => {
-    if (!target.id && target.type !== "submit") setIsOpen(false);
+    console.log("Closing modal by click is currently disabled", target);
+    // if (!target.id && target.type !== "submit") setIsOpen(false);
   };
 
   // setIsOpen(false) if escape button is pressed
@@ -65,7 +66,8 @@ const Modal = ({ setIsOpen, children, heading }) => {
 Modal.propTypes = {
   setIsOpen: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
-  heading: PropTypes.string.isRequired,
+  // string or object
+  heading: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 export default Modal;

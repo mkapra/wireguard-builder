@@ -6,6 +6,7 @@ import Error from "./Error";
 import Searchbar from "./Searchbar";
 import Button from "./Button";
 import NewServer from "./NewServer";
+import ServerDetail from "./ServerDetail";
 
 const GET_SERVERS = gql`
   query Query {
@@ -28,7 +29,9 @@ const GET_SERVERS = gql`
 const ServerList = () => {
   const { loading, error, data } = useQuery(GET_SERVERS);
   const [search, setSearch] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
+  const [newModalIsOpen, setNewModalIsOpen] = useState(false);
+  const [viewModalIsOpen, setViewModalIsOpen] = useState(false);
+  const [selectedServerId, setSelectedServerId] = useState(null);
 
   if (loading) return <p>Loading...</p>;
 
@@ -39,7 +42,7 @@ const ServerList = () => {
       {!error && (
         <>
           <div className="float-right mb-4">
-            <Button onClick={() => setIsOpen(true)}>
+            <Button onClick={() => setNewModalIsOpen(true)}>
               <div className="flex space-x-2">
                 <span>New Server</span>
                 <svg
@@ -91,10 +94,20 @@ const ServerList = () => {
                     .includes(search.toLowerCase())
                 );
               })}
+              onView={(id) => {
+                setSelectedServerId(id);
+                setViewModalIsOpen(true);
+              }}
             />
           </div>
 
-          {isOpen && <NewServer setIsOpen={setIsOpen} />}
+          {newModalIsOpen && <NewServer setIsOpen={setNewModalIsOpen} />}
+          {viewModalIsOpen && (
+            <ServerDetail
+              setIsOpen={setViewModalIsOpen}
+              serverId={selectedServerId}
+            />
+          )}
         </>
       )}
     </>

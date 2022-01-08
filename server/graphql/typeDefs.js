@@ -71,6 +71,8 @@ module.exports = gql`
     description: String
     "The forward interface of the server"
     forward_interface: String!
+    "The external ip address where all clients should connect to"
+    external_ip_address: String!
     "The ip address of the server"
     ip_address: String!
     "The keypair of the server"
@@ -180,6 +182,8 @@ module.exports = gql`
     name: String!
     "The description of the server"
     description: String
+    "The external ip address of the server where all clients should connect to"
+    external_ip_address: String!
     "The IP address of the server"
     ip_address: String!
     "The interface where the other traffic should be forwarded to"
@@ -190,6 +194,8 @@ module.exports = gql`
     vpn_network: VpnNetwork!
     "Clients that are associated with the server"
     clients: [Client!]
+    "The wireguard configuration of the server"
+    config: String
   }
 
   "A wireguard client"
@@ -212,5 +218,7 @@ module.exports = gql`
     keypair: Keypair!
     "The server that the client is associated with"
     server: Server
+    "The wireguard configuration for this client"
+    config: String
   }
 `;

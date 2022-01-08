@@ -160,6 +160,7 @@ class Database extends SQLDataSource {
         "forward_interface",
         "keypair_id",
         "vpn_ip_id",
+        "external_ip_address",
       ])
       .insert(server)
       .then((res) => res[0])
@@ -207,19 +208,19 @@ class Database extends SQLDataSource {
       .where("vpn_ip_addresses.vpn_network_id", vpnNetworkId);
   }
 
-  async getServerByClientId(clientId) {
-    const client = await this.getClientById(clientId);
-    const vpnNetwork = await this.knex
+  async getServerByClientVpnIpId(vpnIpId) {
+    const vpnIp = await this.knex
       .first()
       .from("vpn_ip_addresses")
       .select("vpn_network_id")
-      .where("id", client.vpn_ip_id);
+      .where("id", vpnIpId);
 
     return this.knex
       .first()
       .from("servers")
-      .select("*")
-      .where("vpn_network_id", vpnNetwork.vpn_network_id);
+      .select("servers.*")
+      .join("vpn_ip_addresses", "vpn_ip_addresses.id", "=", "servers.vpn_ip_id")
+      .where("vpn_ip_addresses.vpn_network_id", vpnIp.vpn_network_id);
   }
 
   async getClientById(id) {
