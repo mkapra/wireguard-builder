@@ -3,11 +3,9 @@ import PropTypes from "prop-types";
 import { gql, useQuery } from "@apollo/client";
 import Loader from "react-loader-spinner";
 import { toast } from "react-toastify";
-import QRCode from "react-qr-code";
-import parse from "html-react-parser";
 
 import Modal from "./Modal";
-import Codebox from "./Codebox";
+import ConfigurationViewer from "./ConfigurationViewer";
 
 const GET_CLIENT = gql`
   query Query($id: ID!) {
@@ -50,15 +48,7 @@ const ClientDetail = ({ setIsOpen, clientId }) => {
         </span>
       }
     >
-      <h3 className="text-xl">Configuration</h3>
-      <Codebox value={parse(data.client.config)} />
-
-      <p className="font-semibold">
-        Or scan the QR code with the wireguard app:
-      </p>
-      <div className="flex justify-center">
-        <QRCode value={parse(data.client.config)} />
-      </div>
+      <ConfigurationViewer config={data.client.config} />
     </Modal>
   );
 };
