@@ -1,5 +1,8 @@
 const validator = require("../../validator");
 const { UserInputError } = require("apollo-server");
+const Handlebars = require("handlebars");
+const fs = require("fs");
+const path = require("path");
 
 module.exports = {
   // Resolver for the server type
@@ -13,16 +16,57 @@ module.exports = {
     },
     clients: async (parent, _, { dataSources }) => {
       const vpnNetworkIp = await dataSources.db.getVpnIpById(parent.vpn_ip_id);
-      return dataSources.db.getClientsByServerId(vpnNetworkIp.id);
+      return dataSources.db.getClientsByServerId(vpnNetworkIp.vpn_network_id);
     },
     ip_address: async (parent, _, { dataSources }) => {
       const vpnIp = await dataSources.db.getVpnIpById(parent.vpn_ip_id);
       return vpnIp.address;
     },
-    ip_address: async (parent, _, { dataSources }) => {
+    config: async (parent, _, { dataSources }) => {
+      const templatePath = path.join(
+        __dirname,
+        "config_templates",
+        "server.template"
+      );
+
+      // Get private key for server
+      const keypair = await dataSources.db.getKeypairById(parent.keypair_id);
+      // Get vpn ip address
       const vpnIp = await dataSources.db.getVpnIpById(parent.vpn_ip_id);
-      return vpnIp.address;
-    }
+      // Get clients
+      let clients = await dataSources.db.getClientsByServerId(
+        vpnIp.vpn_network_id
+      );
+      // Get vpn network
+      const vpnNetwork = await dataSources.db.getVpnNetworkById(
+        vpnIp.vpn_network_id
+      );
+      clients = await Promise.all(
+        clients.map(async (client) => {
+          // get public key for client
+          const keypair = await dataSources.db.getKeypairById(
+            client.keypair_id
+          );
+          // get ip address of client
+          const vpnIp = await dataSources.db.getVpnIpById(client.vpn_ip_id);
+
+          return {
+            name: client.name,
+            publicKeyClient: keypair.public_key,
+            clientAllowedIps: vpnIp.address,
+          };
+        })
+      );
+
+      const template = fs.readFileSync(templatePath, "utf8");
+      const compiledTemplate = Handlebars.compile(template);
+      return compiledTemplate({
+        serverIp: `${vpnIp.address}/${vpnNetwork.subnetmask}`,
+        listenPort: vpnNetwork.port,
+        privateKeyServer: keypair.private_key,
+        clients,
+      });
+    },
   },
   Query: {
     servers: async (_, { name }, { dataSources }) => {

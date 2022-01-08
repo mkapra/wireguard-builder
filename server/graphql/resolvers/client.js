@@ -2,6 +2,7 @@ const validator = require("../../validator");
 const { UserInputError } = require("apollo-server");
 const Handlebars = require("handlebars");
 const fs = require("fs");
+const path = require("path");
 
 module.exports = {
   Client: {
@@ -26,8 +27,6 @@ module.exports = {
       return dataSources.db.getServerByClientVpnIpId(parent.id);
     },
     config: async (parent, __, { dataSources }) => {
-      var path = require("path");
-
       const templatePath = path.join(
         __dirname,
         "config_templates",

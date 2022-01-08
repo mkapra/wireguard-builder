@@ -194,6 +194,8 @@ module.exports = gql`
     vpn_network: VpnNetwork!
     "Clients that are associated with the server"
     clients: [Client!]
+    "The wireguard configuration of the server"
+    config: String
   }
 
   "A wireguard client"

@@ -1,24 +1,24 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { gql, useQuery } from "@apollo/client";
+import PropTypes from "prop-types";
 import Loader from "react-loader-spinner";
 import { toast } from "react-toastify";
 
 import Modal from "./Modal";
 import ConfigurationViewer from "./ConfigurationViewer";
 
-const GET_CLIENT = gql`
+const GET_SERVER = gql`
   query Query($id: ID!) {
-    client(id: $id) {
+    server(id: $id) {
       name
       config
     }
   }
 `;
 
-const ClientDetail = ({ setIsOpen, clientId }) => {
-  const { loading, error, data } = useQuery(GET_CLIENT, {
-    variables: { id: clientId },
+const ServerDetail = ({ setIsOpen, serverId }) => {
+  const { loading, error, data } = useQuery(GET_SERVER, {
+    variables: { id: serverId },
   });
 
   if (loading) {
@@ -44,19 +44,19 @@ const ClientDetail = ({ setIsOpen, clientId }) => {
       setIsOpen={setIsOpen}
       heading={
         <span>
-          Detail for <span className="text-blue-500">{data.client.name}</span>
+          Detail for <span className="text-blue-500">{data.server.name}</span>
         </span>
       }
     >
-      <ConfigurationViewer config={data.client.config} />
+      <ConfigurationViewer config={data.server.config} server={true} />
     </Modal>
   );
 };
 
 // Prop types validation
-ClientDetail.propTypes = {
+ServerDetail.propTypes = {
   setIsOpen: PropTypes.func.isRequired,
-  clientId: PropTypes.string.isRequired,
+  serverId: PropTypes.string.isRequired,
 };
 
-export default ClientDetail;
+export default ServerDetail;

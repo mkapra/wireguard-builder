@@ -1,0 +1,14 @@
+[Interface]
+Address = {{serverIp}}
+ListenPort = {{listenPort}}
+PrivateKey = {{privateKeyServer}}
+
+# Clients
+{{#each clients}}
+{{#with this}}
+## {{name}}
+[Peer]
+PublicKey = {{publicKeyClient}}
+AllowedIps = {{clientAllowedIps}}/32
+{{/with}}
+{{/each}}
