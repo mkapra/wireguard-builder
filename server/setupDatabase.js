@@ -137,6 +137,7 @@ const createServers = async () => {
           table.string("name").notNullable();
           table.string("description");
           table.string("forward_interface").notNullable();
+          table.string("external_ip_address").notNullable();
           table.integer("keypair_id").notNullable();
           table.integer("vpn_ip_id").notNullable();
 
@@ -258,6 +259,7 @@ const main = async () => {
   await createKeypairs();
   await createDnsServers();
   await createVpnNetworks();
+  await createServers();
 
   // Close connection when all finished
   await knex.destroy();

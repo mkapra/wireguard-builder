@@ -6,6 +6,7 @@ import Error from "./Error";
 import Searchbar from "./Searchbar";
 import Button from "./Button";
 import NewClient from "./NewClient";
+import ClientDetail from "./ClientDetail";
 
 const GET_CLIENTS = gql`
   query Query {
@@ -31,7 +32,9 @@ const GET_CLIENTS = gql`
 const ClientList = () => {
   const { loading, error, data } = useQuery(GET_CLIENTS);
   const [search, setSearch] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
+  const [newModalIsOpen, setNewModalIsOpen] = useState(false);
+  const [detailModalIsOpen, setDetailModalIsOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
 
   if (loading) return <p>Loading...</p>;
 
@@ -42,7 +45,7 @@ const ClientList = () => {
       {!error && (
         <>
           <div className="float-right mb-4">
-            <Button onClick={() => setIsOpen(true)}>
+            <Button onClick={() => setNewModalIsOpen(true)}>
               <div className="flex space-x-2">
                 <span>New Client</span>
                 <svg
@@ -95,10 +98,21 @@ const ClientList = () => {
                     .includes(search.toLowerCase())
                 );
               })}
+              onView={(id) => {
+                setSelectedId(id);
+                setDetailModalIsOpen(true);
+              }}
             />
           </div>
 
-          {isOpen && <NewClient setIsOpen={setIsOpen} />}
+          {newModalIsOpen && <NewClient setIsOpen={setNewModalIsOpen} />}
+          {detailModalIsOpen && (
+            <ClientDetail
+              setIsOpen={setDetailModalIsOpen}
+              clientId={selectedId}
+              setClientId={setSelectedId}
+            />
+          )}
         </>
       )}
     </>

@@ -39,6 +39,7 @@ const NewServer = ({ setIsOpen }) => {
   const [forwardInterface, setForwardInterface] = useState("");
   const [vpnNetwork, setVpnNetwork] = useState("");
   const [keypair, setKeypair] = useState("");
+  const [externalIpAddress, setExternalIpAddress] = useState("");
 
   const { data, loading, error } = useQuery(GET_REFERENCES);
 
@@ -61,6 +62,7 @@ const NewServer = ({ setIsOpen }) => {
     toast.error("Could not fetch data from API: " + error.message, {
       toastId: "query-error",
     });
+    return null;
   }
 
   const handleSubmit = async (e) => {
@@ -71,6 +73,7 @@ const NewServer = ({ setIsOpen }) => {
         newServer: {
           name,
           description,
+          external_ip_address: externalIpAddress,
           ip_address: ipAddress,
           forward_interface: forwardInterface,
           vpn_network: vpnNetwork,
@@ -93,7 +96,6 @@ const NewServer = ({ setIsOpen }) => {
 
   useEffect(() => {
     if (data) {
-      console.log("Data:", data);
       if (data.vpnNetworks) {
         setVpnNetwork(data.vpnNetworks[0].id);
       }
@@ -139,6 +141,14 @@ const NewServer = ({ setIsOpen }) => {
           placeholder="e.g. eth0"
         />
 
+        <FormInputField
+          labelName="External IP-Address or DNS-Name"
+          value={externalIpAddress}
+          setValue={setExternalIpAddress}
+          type="text"
+          placeholder="e.g. vpn.example.com, 123.123.123.123"
+        />
+
         <SelectInputField
           labelName="VPN Network"
           mainField="name"
@@ -155,7 +165,6 @@ const NewServer = ({ setIsOpen }) => {
           value={keypair}
           setValue={setKeypair}
         />
-
         <SubmitButton>Create Server</SubmitButton>
       </form>
     </Modal>

@@ -19,6 +19,10 @@ module.exports = {
       const vpnIp = await dataSources.db.getVpnIpById(parent.vpn_ip_id);
       return vpnIp.address;
     },
+    ip_address: async (parent, _, { dataSources }) => {
+      const vpnIp = await dataSources.db.getVpnIpById(parent.vpn_ip_id);
+      return vpnIp.address;
+    }
   },
   Query: {
     servers: async (_, { name }, { dataSources }) => {
@@ -45,6 +49,7 @@ module.exports = {
         newServer: {
           name,
           description,
+          external_ip_address,
           forward_interface,
           ip_address,
           keypair: keypairId,
@@ -116,6 +121,7 @@ module.exports = {
       const server = {
         name,
         description,
+        external_ip_address,
         forward_interface,
         keypair_id: keypairId,
         vpn_ip_id: vpnIp.id,
