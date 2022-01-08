@@ -2,6 +2,14 @@ const validator = require("../../validator");
 const { UserInputError } = require("apollo-server");
 
 module.exports = {
+  VpnNetwork: {
+    clients: async (parent, _, { dataSources }) => {
+      return dataSources.db.getClientsByVpnNetworkId(parent.id);
+    },
+    server: async (parent, _, { dataSources }) => {
+      return dataSources.db.getServerByVpnNetworkId(parent.id);
+    },
+  },
   // Resolver for the VPN network.
   Query: {
     vpnNetwork: async (_, { id }, { dataSources }) => {
@@ -47,12 +55,13 @@ module.exports = {
         subnetmask !== null &&
         subnetmask !== ""
       ) {
-        const { subnetmask, isValid } =
+        const [parsedSubnetmask, isValid] =
           !validator.isValidCidrSubnet(subnetmask);
+        console.log(isValid);
         if (!isValid) {
           throw new UserInputError(`Invalid subnetmask '${subnetmask}'`);
         }
-        sbnm = subnetmask;
+        sbnm = parsedSubnetmask;
       }
 
       // check for valid port

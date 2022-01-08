@@ -8,10 +8,16 @@ module.exports = {
       return dataSources.db.getKeypairById(parent.keypair_id);
     },
     vpn_network: async (parent, _, { dataSources }) => {
-      return dataSources.db.getVpnNetworkById(parent.vpn_network_id);
+      const vpnIp = await dataSources.db.getVpnIpById(parent.vpn_ip_id);
+      return dataSources.db.getVpnNetworkById(vpnIp.vpn_network_id);
     },
     clients: async (parent, _, { dataSources }) => {
-      return dataSources.db.getClientsByServerId(parent.id);
+      const vpnNetworkIp = await dataSources.db.getVpnIpById(parent.vpn_ip_id);
+      return dataSources.db.getClientsByServerId(vpnNetworkIp.id);
+    },
+    ip_address: async (parent, _, { dataSources }) => {
+      const vpnIp = await dataSources.db.getVpnIpById(parent.vpn_ip_id);
+      return vpnIp.address;
     },
   },
   Query: {
@@ -29,7 +35,7 @@ module.exports = {
       }
     },
     server: async (_, { id }, { dataSources }) => {
-      return dataSources.db.getServer(id);
+      return dataSources.db.getServerById(id);
     },
   },
   Mutation: {
@@ -100,14 +106,19 @@ module.exports = {
         );
       }
 
+      let vpnIp = {
+        address: ip_address,
+        vpn_network_id: vpnNetworkId,
+      };
+      vpnIp = await dataSources.db.createVpnIp(vpnIp);
+
       // Create server
       const server = {
         name,
         description,
         forward_interface,
-        ip_address,
         keypair_id: keypairId,
-        vpn_network_id: vpnNetworkId,
+        vpn_ip_id: vpnIp.id,
       };
       const createdServer = await dataSources.db.createServer(server);
 

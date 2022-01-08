@@ -105,7 +105,6 @@ const createVpnNetworks = async () => {
         .then(async () => {
           console.log("Table vpn_networks created");
 
-          await createServers();
           await createVpnIpAddresses();
         })
         .catch((err) => {
@@ -137,15 +136,15 @@ const createServers = async () => {
           table.increments("id").primary();
           table.string("name").notNullable();
           table.string("description");
-          table.string("ip_address").notNullable();
           table.string("forward_interface").notNullable();
-          table.integer("vpn_network_id").notNullable();
           table.integer("keypair_id").notNullable();
+          table.integer("vpn_ip_id").notNullable();
 
           table
-            .foreign("vpn_network_id")
+            .foreign("vpn_ip_id")
             .references("id")
-            .inTable("vpn_networks");
+            .inTable("vpn_ip_addresses")
+            .onDelete("CASCADE");
           table
             .foreign("keypair_id")
             .references("id")
@@ -190,6 +189,7 @@ const createVpnIpAddresses = async () => {
         .then(async () => {
           console.log("Table vpn_ip_addresses created");
           await createClients();
+          await createServers();
         })
         .catch((err) => {
           console.log("Error creating vpn_ip_addresses table: ", err);
